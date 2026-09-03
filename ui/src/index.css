@@ -28,6 +28,10 @@
   background-color: var(--white);
 }
 
+.medium-blue-bg {
+  background-color: var(--blue-medium);
+}
+
 .header-text-color {
   color: var(--header-text-color);
 }
