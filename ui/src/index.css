@@ -13,6 +13,7 @@
   --light-blue: rgba(179, 210, 241, 1);
   --dark-blue: rgba(1, 16, 57, 1);
   --header-text-color: rgba(1, 21, 80, 1);
+  --subtext-color: rgba(68, 74, 94, 1);
 }
 
 .text-montserrat {
@@ -21,6 +22,18 @@
 
 .text-poppins {
   font-family: var(--poppins);
+}
+
+.white-bg {
+  background-color: var(--white);
+}
+
+.header-text-color {
+  color: var(--header-text-color);
+}
+
+.subtext-color {
+  color: var(--subtext-color);
 }
 
 input:-webkit-autofill,

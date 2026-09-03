@@ -8,7 +8,7 @@ export function LoginInput({ type, img }: LoginInput) {
     <>
       <div className="relative">
         <img
-          className="absolute w-[30px] h-[30px] ml-3 mt-2"
+          className={`absolute w-[${type === "password" ? "16" : "30"}px] h-[30px] ml-3 mt-2`}
           src={img}
           alt=""
         />
