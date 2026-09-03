@@ -1,0 +1,21 @@
+.login_button {
+  background-color: var(--blue-medium);
+  color: var(--white);
+}
+
+.login_input {
+  background-color: var(--light-blue);
+  border-radius: 7px;
+  outline: 1px auto var(--blue-medium);
+}
+
+.login_title {
+  font-family: var(--poppins);
+  line-height: 100%;
+  color: var(--dark-blue);
+}
+
+.login_card {
+  background-color: var(--white);
+  box-shadow: 6px 4px 10px rgba(0, 0, 0, 0.5);
+}

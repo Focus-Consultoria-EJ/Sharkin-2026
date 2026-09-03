@@ -32,3 +32,5 @@ Thumbs.db
 .git/
 
 /generated/prisma
+
+DevPreview.tsx
