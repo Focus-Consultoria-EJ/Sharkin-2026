@@ -19,3 +19,22 @@
   background-color: var(--white);
   box-shadow: 6px 4px 10px rgba(0, 0, 0, 0.5);
 }
+
+.blue_shark {
+  position: absolute;
+  right: 250px;
+  top: 5px;
+  transform: rotate(42deg);
+}
+
+.semi_circle {
+  position: absolute;
+  right: 175.5px;
+  top: 307px;
+  transform: rotate(90deg);
+}
+
+.page_layout {
+  display: grid;
+  grid-template-rows: 38vh 58vh;
+}

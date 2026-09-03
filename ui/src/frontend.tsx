@@ -3,11 +3,13 @@ import { createRoot } from "react-dom/client";
 import { createBrowserRouter } from "react-router";
 import { RouterProvider } from "react-router/dom";
 import { DevPreview } from "./DevPreview";
+import { LoginPage } from "./pages/LoginPage";
+import "./index.css";
 
 const routes = createBrowserRouter([
   {
     path: "/",
-    element: <div>Hello World</div>,
+    Component: LoginPage,
   },
   {
     path: "/dev/preview",

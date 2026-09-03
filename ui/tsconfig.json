@@ -25,7 +25,8 @@
     "paths": {
       "@/*": ["./src/*"],
       "@/assets/*": ["./src/assets/*"],
-      "@/styles/*": ["./src/styles/*"]
+      "@/styles/*": ["./src/styles/*"],
+      "@/components/*": ["./src/components/*"]
     },
 
     // Some stricter flags (disabled by default)

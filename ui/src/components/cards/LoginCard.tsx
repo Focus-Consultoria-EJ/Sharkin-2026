@@ -11,7 +11,7 @@ export function LoginCard() {
     w-[430px] h-[521px] rounded-[32px] login_card"
     >
       <h2 className="login_title font-[400] text-[56.53px] p-10">Login</h2>
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-8">
         <LoginInput type="email" img={mail} />
         <LoginInput type="password" img={lock} />
         {/* Colocar link para a página de redefinir senha, posteriormente

@@ -6,6 +6,9 @@
   box-sizing: border-box;
   font-size: 16px;
   line-height: 1.65;
+  background-image: url("./assets/focus/wave_bg.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
   --montserrat: Montserrat;
   --poppins: Poppins;
   --blue-medium: rgba(0, 81, 255, 1);
