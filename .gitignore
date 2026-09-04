@@ -30,3 +30,7 @@ Thumbs.db
 
 # Nested repository metadata
 .git/
+
+/generated/prisma
+
+DevPreview.tsx

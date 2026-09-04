@@ -1,1 +1,52 @@
 @import "tailwindcss";
+
+:root {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: 16px;
+  line-height: 1.65;
+  background-image: url("./assets/focus/wave_bg.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  --montserrat: Montserrat;
+  --poppins: Poppins;
+  --blue-medium: rgba(0, 81, 255, 1);
+  --white: rgba(255, 255, 255, 1);
+  --light-blue: rgba(179, 210, 241, 1);
+  --dark-blue: rgba(1, 16, 57, 1);
+  --header-text-color: rgba(1, 21, 80, 1);
+  --subtext-color: rgba(68, 74, 94, 1);
+}
+
+.text-montserrat {
+  font-family: var(--montserrat);
+}
+
+.text-poppins {
+  font-family: var(--poppins);
+}
+
+.white-bg {
+  background-color: var(--white);
+}
+
+.medium-blue-bg {
+  background-color: var(--blue-medium);
+}
+
+.header-text-color {
+  color: var(--header-text-color);
+}
+
+.subtext-color {
+  color: var(--subtext-color);
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--header-text-color);
+  -webkit-box-shadow: 0 0 0px 1000px var(--light-blue) inset;
+  box-shadow: 0 0 0px 1000px var(--light-blue) inset;
+}
