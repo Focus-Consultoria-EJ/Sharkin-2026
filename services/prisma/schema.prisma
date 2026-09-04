@@ -23,7 +23,7 @@ model Duties {
   user     Users    @relation(fields: [user_id], references: [user_id])
   date     DateTime
   in_time  DateTime
-  out_time DateTime
+  out_time DateTime ?
 
   @@map("duties")
 }

@@ -8,4 +8,6 @@
  *
  * 🟢 You can import this file directly.
  */
-export type * from './commonInputTypes.ts'
+export type * from './models/Users.js'
+export type * from './models/Duties.js'
+export type * from './commonInputTypes.js'
