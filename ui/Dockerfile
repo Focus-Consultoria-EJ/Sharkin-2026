@@ -5,7 +5,7 @@ COPY package.json bun.lock ./
 RUN bun install --production
 
 COPY src ./src
-COPY tsconfig.json bun-env.d.ts ./
+COPY tsconfig.json bun-env.d.ts bunfig.toml ./
 
 ENV NODE_ENV=production
 ENV PORT=3000
