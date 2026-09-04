@@ -7,20 +7,24 @@ datasource db {
   provider = "postgresql"
 }
 
-model Users {
-  user_id  String   @id
-  name     String
-  email    String   @unique
-  password String
-  duties   Duties[]
+model User {
+  user_id   String   @id @default(uuid())
+  is_active Boolean  @default(true)
+  name      String
+  email     String   @unique
+  password  String
+  duties    Duty[]
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 
   @@map("users")
 }
 
-model Duties {
-  duty_id  String   @id
+model Duty {
+  duty_id  String   @id @default(uuid())
   user_id  String
-  user     Users    @relation(fields: [user_id], references: [user_id])
+  user     User    @relation(fields: [user_id], references: [user_id])
   date     DateTime
   in_time  DateTime
   out_time DateTime
