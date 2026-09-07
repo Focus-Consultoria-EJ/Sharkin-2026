@@ -1,6 +1,10 @@
-import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
-import { RepositoryService } from '../repository.service';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateUserDto, UpdateUserDto } from './dto/user.dto';
+import { prisma } from '@lib/prisma';
 
 // Criação de um objeto de seleção para retornar apenas os campos públicos do usuário
 const publicUserSelect = {
@@ -14,39 +18,35 @@ const publicUserSelect = {
 
 @Injectable()
 export class UsersService {
-  constructor(
-    private readonly repository: RepositoryService,
-  ) {}
-
   // Método para criação de um novo usuário
-  async create(dto: CreateUserDto){
+  async create(dto: CreateUserDto) {
     const name = dto.name.trim(); // Remove espaços em branco do início e do fim do nome do usuário
     const email = dto.email.trim().toLowerCase();
 
-    const existingUser = await this.repository.client.user.findUnique( {where: { email }} );
+    const existingUser = await prisma.user.findUnique({
+      where: { email },
+    });
 
     if (existingUser) {
-      throw new ConflictException(
-        'Já existe um usuário com esse e-mail.',
-      );
+      throw new ConflictException('Já existe um usuário com esse e-mail.');
     }
 
-    const hashedPassword = await Bun.password.hash(dto.password);  //Usei uma função de hash de senha do Bun para garantir a segurança da senha do usuário
+    const hashedPassword = await Bun.password.hash(dto.password); //Usei uma função de hash de senha do Bun para garantir a segurança da senha do usuário
 
-    return this.repository.client.user.create({
+    return prisma.user.create({
       data: {
         name,
         email,
         password: hashedPassword,
       },
 
-      select: publicUserSelect, 
+      select: publicUserSelect,
     });
   }
 
   // Método que retorna todos os usários ativos do banco de dados, ordenados pela data de criação em ordem decrescente
   async findAll() {
-    return this.repository.client.user.findMany({
+    return prisma.user.findMany({
       where: {
         is_active: true,
       },
@@ -61,37 +61,31 @@ export class UsersService {
 
   // Método que retorna um usuário específico pelo seu ID, caso ele exista e esteja ativo
   async findOne(userId: string) {
-    const user =
-      await this.repository.client.user.findUnique({
-        where: {
-          user_id: userId,
-        },
+    const user = await prisma.user.findUnique({
+      where: {
+        user_id: userId,
+      },
 
-        select: publicUserSelect,
-      });
+      select: publicUserSelect,
+    });
 
     if (!user || !user.is_active) {
-      throw new NotFoundException(
-        'Usuário não encontrado.',
-      );
+      throw new NotFoundException('Usuário não encontrado.');
     }
 
     return user;
   }
 
   // Método que atualiza as informações de um usuário específico, caso ele exista e esteja ativo
-  async update( userId: string, dto: UpdateUserDto,) {
-    const user =
-      await this.repository.client.user.findUnique({
-        where: {
-          user_id: userId,
-        },
-      });
+  async update(userId: string, dto: UpdateUserDto) {
+    const user = await prisma.user.findUnique({
+      where: {
+        user_id: userId,
+      },
+    });
 
     if (!user || !user.is_active) {
-      throw new NotFoundException(
-        'Usuário não encontrado.',
-      );
+      throw new NotFoundException('Usuário não encontrado.');
     }
 
     const data: {
@@ -107,17 +101,14 @@ export class UsersService {
     if (dto.email !== undefined) {
       const email = dto.email.trim().toLowerCase();
 
-      const emailOwner =
-        await this.repository.client.user.findUnique({
-          where: {
-            email,
-          },
-        });
+      const emailOwner = await prisma.user.findUnique({
+        where: {
+          email,
+        },
+      });
 
-      if ( emailOwner && emailOwner.user_id !== userId) {
-        throw new ConflictException(
-          'Já existe um usuário com esse e-mail.',
-        );
+      if (emailOwner && emailOwner.user_id !== userId) {
+        throw new ConflictException('Já existe um usuário com esse e-mail.');
       }
 
       data.email = email;
@@ -127,10 +118,10 @@ export class UsersService {
       data.password = await Bun.password.hash(dto.password);
     }
 
-    return this.repository.client.user.update({
+    return prisma.user.update({
       where: {
         user_id: userId,
-      }, 
+      },
 
       data,
 
@@ -140,26 +131,21 @@ export class UsersService {
 
   // Método que desativa um usuário específico (Delete lógico)
   async delete(userId: string) {
-    const user =
-      await this.repository.client.user.findUnique({
-        where: {
-          user_id: userId,
-        },
-      });
+    const user = await prisma.user.findUnique({
+      where: {
+        user_id: userId,
+      },
+    });
 
     if (!user) {
-      throw new NotFoundException(
-        'Usuário não encontrado.',
-      );
+      throw new NotFoundException('Usuário não encontrado.');
     }
 
     if (!user.is_active) {
-      throw new ConflictException(
-        'Usuário já está desativado.',
-      );
+      throw new ConflictException('Usuário já está desativado.');
     }
 
-    return this.repository.client.user.update({
+    return prisma.user.update({
       where: {
         user_id: userId,
       },
@@ -170,30 +156,25 @@ export class UsersService {
 
       select: publicUserSelect,
     });
-  } 
+  }
 
   // Método que reativa um usuário específico (Delete reverso)
   async restore(userId: string) {
-    const user =
-      await this.repository.client.user.findUnique({
-        where: {
-          user_id: userId,
-        },
-      });
+    const user = await prisma.user.findUnique({
+      where: {
+        user_id: userId,
+      },
+    });
 
     if (!user) {
-      throw new NotFoundException(
-        'Usuário não encontrado.',
-      );
+      throw new NotFoundException('Usuário não encontrado.');
     }
 
     if (user.is_active) {
-      throw new ConflictException(
-        'Usuário já está ativo.',
-      );
+      throw new ConflictException('Usuário já está ativo.');
     }
 
-    return this.repository.client.user.update({
+    return prisma.user.update({
       where: {
         user_id: userId,
       },

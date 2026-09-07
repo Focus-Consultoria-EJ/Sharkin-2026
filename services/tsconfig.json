@@ -17,9 +17,15 @@
     "outDir": "./dist",
 
     "paths": {
+<<<<<<< HEAD
       "@lib/*": ["./lib/*"]
     },
 
     "incremental": true
+=======
+      "@lib/*": ["./lib/*"],
+      "@dtos/*": ["./src/repository/dtos/*"]
+    }
+>>>>>>> crud_plantão
   }
 }
