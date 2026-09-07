@@ -6,10 +6,10 @@ services:
     build:
       context: ./ui
     ports:
-      - "3000:3000"
+      - "${UI_PORT}:${UI_PORT}"
     environment:
       NODE_ENV: production
-      PORT: 3000:3000
+      PORT: ${UI_PORT}
     restart: unless-stopped
     depends_on:
       - services
@@ -19,10 +19,11 @@ services:
     build:
       context: ./services
     ports:
-      - "3001:3001"
+      - "${SERVICES_PORT}:${SERVICES_PORT}"
     environment:
       NODE_ENV: production
-      PORT: 3001
+      PORT: ${SERVICES_PORT}
+      DATABASE_URL: ${DATABASE_URL}
     restart: unless-stopped
     depends_on:
       - postgres
@@ -33,11 +34,11 @@ services:
     volumes:
       - postgres_volume:/var/lib/postgresql/data
     ports:
-      - "5432:5432"
+      - "${POSTGRES_PORT}:5432"
     environment:
-      POSTGRES_DB: sharkin_database
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     restart: unless-stopped
 
 volumes:

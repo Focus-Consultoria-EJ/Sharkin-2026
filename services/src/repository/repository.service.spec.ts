@@ -15,4 +15,8 @@ describe('RepositoryService', () => {
   it('should be defined', () => {
     expect(service).toBeDefined();
   });
+  
+  it('should expose prisma client', () => {
+    expect(service.client).toBeDefined();
+  });
 });
