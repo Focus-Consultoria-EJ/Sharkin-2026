@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { Duties } from './duties/duties.service';
+import { Duties } from './duties/duties.repository';
 import { Connection } from './connection/connection';
 import { UsersService } from './users/users.service';
 

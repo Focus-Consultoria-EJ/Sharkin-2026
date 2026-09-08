@@ -1,7 +1,18 @@
-GET http://localhost:3001/duty
+GET http://localhost:3001/user/1555663d-6ed6-4795-bb03-a9b2d9337503
 Content-Type: application/json
 
 ###
 
-GET http://localhost:3001/duty/7a2a5b9a-1c36-40a6-ae44-2f274486376b
+GET http://localhost:3001/user/
 Content-Type: application/json
+
+###
+
+POST http://localhost:3001/user
+Content-Type: application/json
+
+{
+    "name": "João vitor",
+    "email": "joaovitor@consultoriafocus.com",
+    "password": "1234"
+}

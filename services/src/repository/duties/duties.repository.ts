@@ -1,32 +1,20 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { prisma } from '@lib/prisma';
-import { type DutyDto } from './dtos/duty';
+import { Duty } from '../../../generated/prisma/client';
 
 @Injectable()
 export class Duties {
-  async findAll(): Promise<DutyDto[]> {
+  async findAll(): Promise<Duty[]> {
     const duties = await prisma.duty.findMany();
-
-    if (!duties) {
-      throw new NotFoundException(
-        'Não foi possível buscar por todos os plantões, verifique duties na camada repository',
-      );
-    }
     return duties;
   }
 
-  async findByUser(id: string): Promise<DutyDto[]> {
+  async findByUser(id: string): Promise<Duty[]> {
     const duties = await prisma.duty.findMany({
       where: {
         user_id: id,
       },
     });
-
-    if (!duties) {
-      throw new NotFoundException(
-        `Não foi possível buscar por todos os plantões do usuário de id: ${id}, verifique duties na camada repository`,
-      );
-    }
     return duties;
   }
 
@@ -36,7 +24,7 @@ export class Duties {
     date,
     in_time,
     out_time = null,
-  }: DutyDto): Promise<DutyDto | void> {
+  }: Duty): Promise<Duty | void> {
     const duty = await prisma.duty.create({
       data: {
         duty_id,
