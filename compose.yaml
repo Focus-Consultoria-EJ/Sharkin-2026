@@ -1,32 +1,33 @@
 name: sharkin
 
 services:
-  ui:
-    container_name: sharkin_ui
-    build:
-      context: ./ui
-    ports:
-      - "${UI_PORT}:${UI_PORT}"
-    environment:
-      NODE_ENV: production
-      PORT: ${UI_PORT}
-    restart: unless-stopped
-    depends_on:
-      - services
+  # ui:
+  #   container_name: sharkin_ui
+  #   build:
+  #     context: ./ui
+  #   ports:
+  #     - 3000:3000
+  #   environment:
+  #     NODE_ENV: production
+  #     PORT: 3000
+  #   restart: unless-stopped
+  #   depends_on:
+  #     - services
 
-  services:
-    container_name: sharkin_services
-    build:
-      context: ./services
-    ports:
-      - "${SERVICES_PORT}:${SERVICES_PORT}"
-    environment:
-      NODE_ENV: production
-      PORT: ${SERVICES_PORT}
-      DATABASE_URL: ${DATABASE_URL}
-    restart: unless-stopped
-    depends_on:
-      - postgres
+  # services:
+  #   container_name: sharkin_services
+  #   build:
+  #     context: ./services
+  #   ports:
+  #     - 3001:3001
+  #   environment:
+  #     NODE_ENV: production
+  #     PORT: 3001
+  #     DATABASE_URL: DATABASE_URL=postgresql://admin:1234@localhost:5432/sharkin_database
+
+  #   restart: unless-stopped
+  #   depends_on:
+  #     - postgres
 
   postgres:
     container_name: sharkin_db
@@ -34,11 +35,11 @@ services:
     volumes:
       - postgres_volume:/var/lib/postgresql/data
     ports:
-      - "${POSTGRES_PORT}:5432"
+      - 5432:5432
     environment:
-      POSTGRES_DB: ${POSTGRES_DB}
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: sharkin_database
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: 1234
     restart: unless-stopped
 
 volumes:

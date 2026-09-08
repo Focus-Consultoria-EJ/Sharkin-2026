@@ -1,0 +1,7 @@
+GET http://localhost:3001/duty
+Content-Type: application/json
+
+###
+
+GET http://localhost:3001/duty/7a2a5b9a-1c36-40a6-ae44-2f274486376b
+Content-Type: application/json
