@@ -4,49 +4,60 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/user.dtos';
-
-type UserType = {
-  id: string;
-  name: string;
-  email: string;
-};
+import { UsersRepository } from '@repository/users/users.service';
 
 @Injectable()
 export class User {
-  private userRepository: UserType[] = [];
+  constructor(private repository: UsersRepository) {}
 
-  findUser(id: string) {
-    const user = this.userRepository.find((user) => user.id === id);
+  async findUser(id: string) {
+    const user = await this.repository.findOne(id);
+
     if (!user) {
-      throw new NotFoundException(`Usuário de id: ${id} não encontrado`);
+      throw new NotFoundException(
+        `Usuário de id: ${id} não encontrado ou está desativado`,
+      );
     }
 
     return user;
   }
 
-  findAllUsers() {
-    return this.userRepository;
+  async findAllUsers() {
+    return await this.repository.findAll();
   }
 
-  findUserByEmail(email: string) {
-    return this.userRepository.find((user) => user.email === email);
-  }
+  async createUser(data: CreateUserDto) {
+    const { password, email, name } = data;
 
-  createUser(data: CreateUserDto) {
-    const id = crypto.randomUUID();
-    const new_user = {
-      ...data,
-      id: id,
-    };
+    const hash = await Bun.password.hash(password);
 
-    if (
-      this.userRepository.find((user) => user.id === id) ||
-      this.userRepository.find((user) => user.email === new_user.email)
-    ) {
+    const existingUser = await this.repository.findByEmail(email);
+
+    if (existingUser) {
       throw new ConflictException('Usuário já cadastrado');
     }
 
-    this.userRepository.push(new_user);
+    const id = crypto.randomUUID();
+    const new_user = {
+      password: hash,
+      email: email.trim().toLowerCase(),
+      name: name,
+      user_id: id,
+      is_active: true,
+    };
+
+    await this.repository.create(new_user);
     return new_user;
+  }
+
+  async desactivateUser(id: string) {
+    const user = await this.repository.deactivateUser(id);
+
+    if (!user) {
+      throw new ConflictException('Usuário não encontrado');
+    }
+
+    user!.isActive = false;
+    return user;
   }
 }

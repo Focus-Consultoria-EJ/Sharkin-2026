@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Post, Body } from '@nestjs/common';
+import { Controller, Get, Param, Post, Body, Patch } from '@nestjs/common';
 import { CreateUserDto } from './dto/user.dtos';
 import { User } from './user';
 
@@ -19,5 +19,10 @@ export class UserController {
   @Post()
   async createUser(@Body() data: CreateUserDto) {
     return this.repo.createUser(data);
+  }
+
+  @Patch(':id')
+  async desactivateUser(@Param('id') id: string) {
+    return this.repo.desactivateUser(id);
   }
 }

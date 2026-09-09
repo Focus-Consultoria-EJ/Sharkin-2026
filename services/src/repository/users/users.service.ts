@@ -3,55 +3,24 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { CreateUserDto, UpdateUserDto } from './dto/user.dto';
 import { prisma } from '@lib/prisma';
-
-// Criação de um objeto de seleção para retornar apenas os campos públicos do usuário
-const publicUserSelect = {
-  user_id: true,
-  name: true,
-  email: true,
-  is_active: true,
-  created_at: true,
-  updated_at: true,
-} as const;
+import { CreateUserDto } from '../../user/dto/user.dtos';
 
 @Injectable()
-export class UsersService {
-  // Método para criação de um novo usuário
-  async create(dto: CreateUserDto) {
-    const name = dto.name.trim(); // Remove espaços em branco do início e do fim do nome do usuário
-    const email = dto.email.trim().toLowerCase();
-
-    const existingUser = await prisma.user.findUnique({
-      where: { email },
-    });
-
-    if (existingUser) {
-      throw new ConflictException('Já existe um usuário com esse e-mail.');
-    }
-
-    const hashedPassword = await Bun.password.hash(dto.password); //Usei uma função de hash de senha do Bun para garantir a segurança da senha do usuário
-
-    return prisma.user.create({
+export class UsersRepository {
+  async create(user: CreateUserDto) {
+    return await prisma.user.create({
       data: {
-        name,
-        email,
-        password: hashedPassword,
+        ...user,
       },
-
-      select: publicUserSelect,
     });
   }
 
-  // Método que retorna todos os usários ativos do banco de dados, ordenados pela data de criação em ordem decrescente
   async findAll() {
     return prisma.user.findMany({
       where: {
         is_active: true,
       },
-
-      select: publicUserSelect,
 
       orderBy: {
         created_at: 'desc',
@@ -59,131 +28,40 @@ export class UsersService {
     });
   }
 
-  // Método que retorna um usuário específico pelo seu ID, caso ele exista e esteja ativo
   async findOne(userId: string) {
     const user = await prisma.user.findUnique({
       where: {
         user_id: userId,
       },
-
-      select: publicUserSelect,
     });
 
     if (!user || !user.is_active) {
-      throw new NotFoundException('Usuário não encontrado.');
+      throw new NotFoundException('Usuário não encontrado ou desativado.');
     }
 
     return user;
   }
 
-  // Método que atualiza as informações de um usuário específico, caso ele exista e esteja ativo
-  async update(userId: string, dto: UpdateUserDto) {
-    const user = await prisma.user.findUnique({
+  async findByEmail(email: string) {
+    const user = await prisma.user.findFirst({
       where: {
-        user_id: userId,
+        email: email,
       },
     });
 
-    if (!user || !user.is_active) {
-      throw new NotFoundException('Usuário não encontrado.');
-    }
-
-    const data: {
-      name?: string;
-      email?: string;
-      password?: string;
-    } = {};
-
-    if (dto.name !== undefined) {
-      data.name = dto.name.trim();
-    }
-
-    if (dto.email !== undefined) {
-      const email = dto.email.trim().toLowerCase();
-
-      const emailOwner = await prisma.user.findUnique({
-        where: {
-          email,
-        },
-      });
-
-      if (emailOwner && emailOwner.user_id !== userId) {
-        throw new ConflictException('Já existe um usuário com esse e-mail.');
-      }
-
-      data.email = email;
-    }
-
-    if (dto.password !== undefined) {
-      data.password = await Bun.password.hash(dto.password);
-    }
-
-    return prisma.user.update({
-      where: {
-        user_id: userId,
-      },
-
-      data,
-
-      select: publicUserSelect,
-    });
+    return user;
   }
 
-  // Método que desativa um usuário específico (Delete lógico)
-  async delete(userId: string) {
-    const user = await prisma.user.findUnique({
+  async deactivateUser(id: string) {
+    const user = prisma.user.update({
       where: {
-        user_id: userId,
+        user_id: id,
       },
-    });
-
-    if (!user) {
-      throw new NotFoundException('Usuário não encontrado.');
-    }
-
-    if (!user.is_active) {
-      throw new ConflictException('Usuário já está desativado.');
-    }
-
-    return prisma.user.update({
-      where: {
-        user_id: userId,
-      },
-
       data: {
         is_active: false,
       },
-
-      select: publicUserSelect,
-    });
-  }
-
-  // Método que reativa um usuário específico (Delete reverso)
-  async restore(userId: string) {
-    const user = await prisma.user.findUnique({
-      where: {
-        user_id: userId,
-      },
     });
 
-    if (!user) {
-      throw new NotFoundException('Usuário não encontrado.');
-    }
-
-    if (user.is_active) {
-      throw new ConflictException('Usuário já está ativo.');
-    }
-
-    return prisma.user.update({
-      where: {
-        user_id: userId,
-      },
-
-      data: {
-        is_active: true,
-      },
-
-      select: publicUserSelect,
-    });
+    return user;
   }
 }

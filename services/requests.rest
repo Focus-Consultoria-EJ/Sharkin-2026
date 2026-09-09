@@ -1,4 +1,4 @@
-GET http://localhost:3001/user/1555663d-6ed6-4795-bb03-a9b2d9337503
+GET http://localhost:3001/user/af941ab7-1209-4df7-99f5-59bb746184e7
 Content-Type: application/json
 
 ###
@@ -12,7 +12,14 @@ POST http://localhost:3001/user
 Content-Type: application/json
 
 {
-    "name": "João vitor",
-    "email": "joaovitor@consultoriafocus.com",
+    "name": "Luc Panet",
+    "email": "lucpanet@consultoriafocus.com",
     "password": "1234"
 }
+
+###
+
+PATCH  http://localhost:3001/user/af941ab7-1209-4df7-99f5-59bb746184e7
+Content-Type: application/json
+
+{}
