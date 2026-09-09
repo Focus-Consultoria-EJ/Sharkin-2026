@@ -57,7 +57,6 @@ export class User {
       throw new ConflictException('Usuário não encontrado');
     }
 
-    user!.isActive = false;
     return user;
   }
 }
