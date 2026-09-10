@@ -87,9 +87,8 @@ export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof User
 export const DutyScalarFieldEnum = {
   duty_id: 'duty_id',
   user_id: 'user_id',
-  date: 'date',
-  in_time: 'in_time',
-  out_time: 'out_time'
+  dateTime_in: 'dateTime_in',
+  dateTime_out: 'dateTime_out'
 } as const
 
 export type DutyScalarFieldEnum = (typeof DutyScalarFieldEnum)[keyof typeof DutyScalarFieldEnum]

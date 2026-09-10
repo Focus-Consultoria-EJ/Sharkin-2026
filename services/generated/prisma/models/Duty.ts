@@ -27,25 +27,22 @@ export type AggregateDuty = {
 export type DutyMinAggregateOutputType = {
   duty_id: string | null
   user_id: string | null
-  date: Date | null
-  in_time: Date | null
-  out_time: Date | null
+  dateTime_in: Date | null
+  dateTime_out: Date | null
 }
 
 export type DutyMaxAggregateOutputType = {
   duty_id: string | null
   user_id: string | null
-  date: Date | null
-  in_time: Date | null
-  out_time: Date | null
+  dateTime_in: Date | null
+  dateTime_out: Date | null
 }
 
 export type DutyCountAggregateOutputType = {
   duty_id: number
   user_id: number
-  date: number
-  in_time: number
-  out_time: number
+  dateTime_in: number
+  dateTime_out: number
   _all: number
 }
 
@@ -53,25 +50,22 @@ export type DutyCountAggregateOutputType = {
 export type DutyMinAggregateInputType = {
   duty_id?: true
   user_id?: true
-  date?: true
-  in_time?: true
-  out_time?: true
+  dateTime_in?: true
+  dateTime_out?: true
 }
 
 export type DutyMaxAggregateInputType = {
   duty_id?: true
   user_id?: true
-  date?: true
-  in_time?: true
-  out_time?: true
+  dateTime_in?: true
+  dateTime_out?: true
 }
 
 export type DutyCountAggregateInputType = {
   duty_id?: true
   user_id?: true
-  date?: true
-  in_time?: true
-  out_time?: true
+  dateTime_in?: true
+  dateTime_out?: true
   _all?: true
 }
 
@@ -150,9 +144,8 @@ export type DutyGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 export type DutyGroupByOutputType = {
   duty_id: string
   user_id: string
-  date: Date
-  in_time: Date
-  out_time: Date | null
+  dateTime_in: Date
+  dateTime_out: Date | null
   _count: DutyCountAggregateOutputType | null
   _min: DutyMinAggregateOutputType | null
   _max: DutyMaxAggregateOutputType | null
@@ -179,18 +172,16 @@ export type DutyWhereInput = {
   NOT?: Prisma.DutyWhereInput | Prisma.DutyWhereInput[]
   duty_id?: Prisma.StringFilter<"Duty"> | string
   user_id?: Prisma.StringFilter<"Duty"> | string
-  date?: Prisma.DateTimeFilter<"Duty"> | Date | string
-  in_time?: Prisma.DateTimeFilter<"Duty"> | Date | string
-  out_time?: Prisma.DateTimeNullableFilter<"Duty"> | Date | string | null
+  dateTime_in?: Prisma.DateTimeFilter<"Duty"> | Date | string
+  dateTime_out?: Prisma.DateTimeNullableFilter<"Duty"> | Date | string | null
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
 
 export type DutyOrderByWithRelationInput = {
   duty_id?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
-  date?: Prisma.SortOrder
-  in_time?: Prisma.SortOrder
-  out_time?: Prisma.SortOrderInput | Prisma.SortOrder
+  dateTime_in?: Prisma.SortOrder
+  dateTime_out?: Prisma.SortOrderInput | Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
 }
 
@@ -200,18 +191,16 @@ export type DutyWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.DutyWhereInput[]
   NOT?: Prisma.DutyWhereInput | Prisma.DutyWhereInput[]
   user_id?: Prisma.StringFilter<"Duty"> | string
-  date?: Prisma.DateTimeFilter<"Duty"> | Date | string
-  in_time?: Prisma.DateTimeFilter<"Duty"> | Date | string
-  out_time?: Prisma.DateTimeNullableFilter<"Duty"> | Date | string | null
+  dateTime_in?: Prisma.DateTimeFilter<"Duty"> | Date | string
+  dateTime_out?: Prisma.DateTimeNullableFilter<"Duty"> | Date | string | null
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "duty_id">
 
 export type DutyOrderByWithAggregationInput = {
   duty_id?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
-  date?: Prisma.SortOrder
-  in_time?: Prisma.SortOrder
-  out_time?: Prisma.SortOrderInput | Prisma.SortOrder
+  dateTime_in?: Prisma.SortOrder
+  dateTime_out?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.DutyCountOrderByAggregateInput
   _max?: Prisma.DutyMaxOrderByAggregateInput
   _min?: Prisma.DutyMinOrderByAggregateInput
@@ -223,64 +212,56 @@ export type DutyScalarWhereWithAggregatesInput = {
   NOT?: Prisma.DutyScalarWhereWithAggregatesInput | Prisma.DutyScalarWhereWithAggregatesInput[]
   duty_id?: Prisma.StringWithAggregatesFilter<"Duty"> | string
   user_id?: Prisma.StringWithAggregatesFilter<"Duty"> | string
-  date?: Prisma.DateTimeWithAggregatesFilter<"Duty"> | Date | string
-  in_time?: Prisma.DateTimeWithAggregatesFilter<"Duty"> | Date | string
-  out_time?: Prisma.DateTimeNullableWithAggregatesFilter<"Duty"> | Date | string | null
+  dateTime_in?: Prisma.DateTimeWithAggregatesFilter<"Duty"> | Date | string
+  dateTime_out?: Prisma.DateTimeNullableWithAggregatesFilter<"Duty"> | Date | string | null
 }
 
 export type DutyCreateInput = {
   duty_id?: string
-  date: Date | string
-  in_time: Date | string
-  out_time?: Date | string | null
+  dateTime_in?: Date | string
+  dateTime_out?: Date | string | null
   user: Prisma.UserCreateNestedOneWithoutDutiesInput
 }
 
 export type DutyUncheckedCreateInput = {
   duty_id?: string
   user_id: string
-  date: Date | string
-  in_time: Date | string
-  out_time?: Date | string | null
+  dateTime_in?: Date | string
+  dateTime_out?: Date | string | null
 }
 
 export type DutyUpdateInput = {
   duty_id?: Prisma.StringFieldUpdateOperationsInput | string
-  date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  in_time?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  out_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dateTime_in?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  dateTime_out?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   user?: Prisma.UserUpdateOneRequiredWithoutDutiesNestedInput
 }
 
 export type DutyUncheckedUpdateInput = {
   duty_id?: Prisma.StringFieldUpdateOperationsInput | string
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
-  date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  in_time?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  out_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dateTime_in?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  dateTime_out?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type DutyCreateManyInput = {
   duty_id?: string
   user_id: string
-  date: Date | string
-  in_time: Date | string
-  out_time?: Date | string | null
+  dateTime_in?: Date | string
+  dateTime_out?: Date | string | null
 }
 
 export type DutyUpdateManyMutationInput = {
   duty_id?: Prisma.StringFieldUpdateOperationsInput | string
-  date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  in_time?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  out_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dateTime_in?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  dateTime_out?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type DutyUncheckedUpdateManyInput = {
   duty_id?: Prisma.StringFieldUpdateOperationsInput | string
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
-  date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  in_time?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  out_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dateTime_in?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  dateTime_out?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type DutyListRelationFilter = {
@@ -296,25 +277,22 @@ export type DutyOrderByRelationAggregateInput = {
 export type DutyCountOrderByAggregateInput = {
   duty_id?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
-  date?: Prisma.SortOrder
-  in_time?: Prisma.SortOrder
-  out_time?: Prisma.SortOrder
+  dateTime_in?: Prisma.SortOrder
+  dateTime_out?: Prisma.SortOrder
 }
 
 export type DutyMaxOrderByAggregateInput = {
   duty_id?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
-  date?: Prisma.SortOrder
-  in_time?: Prisma.SortOrder
-  out_time?: Prisma.SortOrder
+  dateTime_in?: Prisma.SortOrder
+  dateTime_out?: Prisma.SortOrder
 }
 
 export type DutyMinOrderByAggregateInput = {
   duty_id?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
-  date?: Prisma.SortOrder
-  in_time?: Prisma.SortOrder
-  out_time?: Prisma.SortOrder
+  dateTime_in?: Prisma.SortOrder
+  dateTime_out?: Prisma.SortOrder
 }
 
 export type DutyCreateNestedManyWithoutUserInput = {
@@ -365,16 +343,14 @@ export type NullableDateTimeFieldUpdateOperationsInput = {
 
 export type DutyCreateWithoutUserInput = {
   duty_id?: string
-  date: Date | string
-  in_time: Date | string
-  out_time?: Date | string | null
+  dateTime_in?: Date | string
+  dateTime_out?: Date | string | null
 }
 
 export type DutyUncheckedCreateWithoutUserInput = {
   duty_id?: string
-  date: Date | string
-  in_time: Date | string
-  out_time?: Date | string | null
+  dateTime_in?: Date | string
+  dateTime_out?: Date | string | null
 }
 
 export type DutyCreateOrConnectWithoutUserInput = {
@@ -409,37 +385,32 @@ export type DutyScalarWhereInput = {
   NOT?: Prisma.DutyScalarWhereInput | Prisma.DutyScalarWhereInput[]
   duty_id?: Prisma.StringFilter<"Duty"> | string
   user_id?: Prisma.StringFilter<"Duty"> | string
-  date?: Prisma.DateTimeFilter<"Duty"> | Date | string
-  in_time?: Prisma.DateTimeFilter<"Duty"> | Date | string
-  out_time?: Prisma.DateTimeNullableFilter<"Duty"> | Date | string | null
+  dateTime_in?: Prisma.DateTimeFilter<"Duty"> | Date | string
+  dateTime_out?: Prisma.DateTimeNullableFilter<"Duty"> | Date | string | null
 }
 
 export type DutyCreateManyUserInput = {
   duty_id?: string
-  date: Date | string
-  in_time: Date | string
-  out_time?: Date | string | null
+  dateTime_in?: Date | string
+  dateTime_out?: Date | string | null
 }
 
 export type DutyUpdateWithoutUserInput = {
   duty_id?: Prisma.StringFieldUpdateOperationsInput | string
-  date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  in_time?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  out_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dateTime_in?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  dateTime_out?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type DutyUncheckedUpdateWithoutUserInput = {
   duty_id?: Prisma.StringFieldUpdateOperationsInput | string
-  date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  in_time?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  out_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dateTime_in?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  dateTime_out?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type DutyUncheckedUpdateManyWithoutUserInput = {
   duty_id?: Prisma.StringFieldUpdateOperationsInput | string
-  date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  in_time?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  out_time?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dateTime_in?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  dateTime_out?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 
@@ -447,39 +418,35 @@ export type DutyUncheckedUpdateManyWithoutUserInput = {
 export type DutySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   duty_id?: boolean
   user_id?: boolean
-  date?: boolean
-  in_time?: boolean
-  out_time?: boolean
+  dateTime_in?: boolean
+  dateTime_out?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["duty"]>
 
 export type DutySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   duty_id?: boolean
   user_id?: boolean
-  date?: boolean
-  in_time?: boolean
-  out_time?: boolean
+  dateTime_in?: boolean
+  dateTime_out?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["duty"]>
 
 export type DutySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   duty_id?: boolean
   user_id?: boolean
-  date?: boolean
-  in_time?: boolean
-  out_time?: boolean
+  dateTime_in?: boolean
+  dateTime_out?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["duty"]>
 
 export type DutySelectScalar = {
   duty_id?: boolean
   user_id?: boolean
-  date?: boolean
-  in_time?: boolean
-  out_time?: boolean
+  dateTime_in?: boolean
+  dateTime_out?: boolean
 }
 
-export type DutyOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"duty_id" | "user_id" | "date" | "in_time" | "out_time", ExtArgs["result"]["duty"]>
+export type DutyOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"duty_id" | "user_id" | "dateTime_in" | "dateTime_out", ExtArgs["result"]["duty"]>
 export type DutyInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -498,9 +465,8 @@ export type $DutyPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     duty_id: string
     user_id: string
-    date: Date
-    in_time: Date
-    out_time: Date | null
+    dateTime_in: Date
+    dateTime_out: Date | null
   }, ExtArgs["result"]["duty"]>
   composites: {}
 }
@@ -927,9 +893,8 @@ export interface Prisma__DutyClient<T, Null = never, ExtArgs extends runtime.Typ
 export interface DutyFieldRefs {
   readonly duty_id: Prisma.FieldRef<"Duty", 'String'>
   readonly user_id: Prisma.FieldRef<"Duty", 'String'>
-  readonly date: Prisma.FieldRef<"Duty", 'DateTime'>
-  readonly in_time: Prisma.FieldRef<"Duty", 'DateTime'>
-  readonly out_time: Prisma.FieldRef<"Duty", 'DateTime'>
+  readonly dateTime_in: Prisma.FieldRef<"Duty", 'DateTime'>
+  readonly dateTime_out: Prisma.FieldRef<"Duty", 'DateTime'>
 }
     
 

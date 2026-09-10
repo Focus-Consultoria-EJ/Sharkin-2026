@@ -3,7 +3,7 @@ import { prisma } from '@lib/prisma';
 import { Duty } from '../../../generated/prisma/client';
 
 @Injectable()
-export class Duties {
+export class DutyRepository {
   async findAll(): Promise<Duty[]> {
     const duties = await prisma.duty.findMany();
     return duties;
@@ -18,20 +18,10 @@ export class Duties {
     return duties;
   }
 
-  async create({
-    duty_id,
-    user_id,
-    date,
-    in_time,
-    out_time = null,
-  }: Duty): Promise<Duty | void> {
-    const duty = await prisma.duty.create({
+  async create(userId: string): Promise<Duty> {
+    return prisma.duty.create({
       data: {
-        duty_id,
-        user_id,
-        date,
-        in_time,
-        out_time,
+        user_id: userId,
       },
     });
   }
