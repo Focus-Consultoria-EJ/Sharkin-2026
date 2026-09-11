@@ -47,7 +47,7 @@ Content-Type: application/json
 
 ###
 
-PATCH http://localhost:3001/duty
+PATCH http://localhost:3001/duty/a5f4ffee-ab37-4a94-a264-94bef13d7a7a
 Content-Type: application/json
 
 {}

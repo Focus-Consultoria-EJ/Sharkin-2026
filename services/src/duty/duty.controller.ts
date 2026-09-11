@@ -20,8 +20,8 @@ export class DutyController {
     return await this.dutyService.createDuty(userId);
   }
 
-  @Patch()
-  async registerOutTime() {
-    return 'registrando ponto de saida';
+  @Patch('/:id')
+  async registerOutTime(@Param('id') userId: string) {
+    return this.dutyService.closeDuty(userId);
   }
 }
