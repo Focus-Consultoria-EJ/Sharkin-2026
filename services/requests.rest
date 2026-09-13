@@ -6,7 +6,7 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:3001/user/
+GET http://localhost:3001/user
 Content-Type: application/json
 
 ###
@@ -15,8 +15,8 @@ POST http://localhost:3001/user
 Content-Type: application/json
 
 {
-    "name": "Lucas da Silva Lopes",
-    "email": "lulopes@consultoriafocus.com",
+    "name": "teste",
+    "email": "teste@consultoriafocus.com",
     "password": "1234"
 }
 
@@ -51,3 +51,14 @@ PATCH http://localhost:3001/duty/a5f4ffee-ab37-4a94-a264-94bef13d7a7a
 Content-Type: application/json
 
 {}
+
+
+###Auth
+
+POST http://localhost:3001/auth/sign-in
+Content-Type: application/json
+
+{
+    "email":"teste@consultoriafocus.com",
+    "password":"1234"
+}
