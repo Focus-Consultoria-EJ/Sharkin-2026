@@ -31,4 +31,9 @@ Thumbs.db
 # Nested repository metadata
 .git/
 
-/generated/prisma
+#prisma
+services/generated/prisma
+
+
+#testes de requisição
+services/requests.rest 
