@@ -9,3 +9,7 @@ export class SignInDto {
   @IsNotEmpty()
   password!: string;
 }
+
+export type AccessTokenDto = {
+  accessToken: string;
+};

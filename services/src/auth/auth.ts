@@ -1,11 +1,16 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { User } from '../user/user';
+import { JwtService } from '@nestjs/jwt';
+import { AccessTokenDto } from './dto/auth.dto';
 
 @Injectable()
 export class Auth {
-  constructor(private userService: User) {}
+  constructor(
+    private userService: User,
+    private jwtService: JwtService,
+  ) {}
 
-  async authUser(email: string, password: string) {
+  async authUser(email: string, password: string): Promise<AccessTokenDto> {
     try {
       const userData = await this.userService.findUserByEmail(email);
 
@@ -15,12 +20,13 @@ export class Auth {
         throw new UnauthorizedException('Email ou senha incorreta');
       }
 
+      const payload = {
+        sub: userData.user_id,
+        username: userData.name,
+      };
+
       return {
-        isMatch: isMatch,
-        userData: {
-          email: userData.email,
-        },
-        jwt: 'asodoiajsdijo',
+        accessToken: await this.jwtService.signAsync(payload),
       };
     } catch (err) {
       throw err;
