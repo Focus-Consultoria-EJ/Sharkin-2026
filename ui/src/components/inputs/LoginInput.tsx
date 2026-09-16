@@ -3,7 +3,7 @@ type LoginInput = {
   img: string;
 };
 
-export function LoginInput({ type, img }: LoginInput) {
+export function LoginInput({ type, img, ...props }: LoginInput) {
   return (
     <>
       <div className="relative">
@@ -20,6 +20,7 @@ export function LoginInput({ type, img }: LoginInput) {
           className="w-[351px] h-[47] login_input pl-12"
           id={`${type}`}
           type={`${type}`}
+          {...props}
         />
       </div>
     </>

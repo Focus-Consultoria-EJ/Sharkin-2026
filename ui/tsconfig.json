@@ -26,7 +26,8 @@
       "@/*": ["./src/*"],
       "@/assets/*": ["./src/assets/*"],
       "@/styles/*": ["./src/styles/*"],
-      "@/components/*": ["./src/components/*"]
+      "@/components/*": ["./src/components/*"],
+      "@/api/*": ["./src/api/*"]
     },
 
     // Some stricter flags (disabled by default)

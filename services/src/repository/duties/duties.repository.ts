@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { prisma } from '@lib/prisma';
-import { Duty } from '../../../generated/prisma/client';
+import { Duty } from '@generated/prisma/client';
 
 @Injectable()
 export class DutyRepository {

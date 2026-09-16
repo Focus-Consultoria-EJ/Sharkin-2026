@@ -22,6 +22,18 @@ export class User {
     return user;
   }
 
+  async findUserByEmail(email: string) {
+    const user = await this.repository.findByEmail(email);
+
+    if (!user) {
+      throw new NotFoundException(
+        `Usuário de email: ${email} não encontrado ou está desativado`,
+      );
+    }
+
+    return user;
+  }
+
   async findAllUsers() {
     return await this.repository.findAll();
   }
