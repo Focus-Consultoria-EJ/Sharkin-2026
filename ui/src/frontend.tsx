@@ -3,12 +3,17 @@ import { createRoot } from "react-dom/client";
 import { createBrowserRouter } from "react-router";
 import { RouterProvider } from "react-router/dom";
 import { LoginPage } from "./pages/LoginPage";
+import { UserPage } from "./pages/UserPage";
 import "./index.css";
 
 const routes = createBrowserRouter([
   {
     path: "/",
     Component: LoginPage,
+  },
+  {
+    path: "/usuario",
+    Component: UserPage,
   },
 ]);
 
