@@ -1,0 +1,186 @@
+.user-page {
+  min-width: 1440px;
+  min-height: 1024px;
+  overflow-x: auto;
+  color: white;
+  background-image: url("../assets/focus/user_bg.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.user-header {
+  position: relative;
+  height: 159px;
+}
+
+.user-brand {
+  position: absolute;
+  top: 103px;
+  left: 0;
+  width: 621px;
+  padding: 0 0 10px 58px;
+  border-bottom: 2px solid #d9d9d9;
+}
+
+.user-brand h1 {
+  margin: 0;
+  font-family: var(--poppins);
+  font-size: 48px;
+  font-weight: 800;
+  font-style: italic;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.logout-button {
+  position: absolute;
+  top: 101px;
+  right: 87px;
+  width: 174px;
+  height: 55px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  color: white;
+  background: #617e9a;
+  box-shadow: 0 6px 20px rgb(0 0 0 / 45%);
+  font-family: var(--montserrat);
+  font-size: 23px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.user-seal {
+  position: absolute;
+  z-index: 2;
+  top: 18px;
+  right: 83px;
+  width: 112px;
+  height: 112px;
+  object-fit: contain;
+  transform: translateY(3) scaleX(-1) rotate(5deg);
+  pointer-events: none;
+}
+
+.user-action {
+  display: flex;
+  justify-content: center;
+  margin-top: 44px;
+  margin-bottom: 60px;
+}
+
+.duty-toggle {
+  width: 305px;
+  height: 96px;
+  border: 0;
+  border-radius: 999px;
+  color: white;
+  box-shadow: 0 6px 20px rgb(0 0 0 / 65%);
+  font-family: var(--montserrat);
+  font-size: 48px;
+  font-weight: 900;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    background-color 180ms ease,
+    transform 100ms ease,
+    opacity 180ms ease;
+}
+
+.duty-toggle--in {
+  background: #0051ff;
+}
+
+.duty-toggle--out {
+  background: #ff5500;
+}
+
+.duty-toggle:hover:not(:disabled) {
+  filter: brightness(1.06);
+}
+
+.duty-toggle:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.duty-toggle:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+.duties-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 242px);
+  justify-content: center;
+  gap: 58px 64px;
+  padding-bottom: 60px;
+}
+
+.duty-card {
+  position: relative;
+  width: 242px;
+  height: 152px;
+  overflow: hidden;
+  border-radius: 18px;
+  color: #011550;
+  background: white;
+  text-align: center;
+}
+
+.duty-card__date,
+.duty-card__time {
+  position: relative;
+  z-index: 2;
+  margin: 0;
+}
+
+.duty-card__date {
+  padding-top: 24px;
+  font-family: var(--poppins);
+  font-size: 31px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.duty-card__time {
+  margin-top: 22px;
+  color: #1d2e68;
+  font-family: var(--poppins);
+  font-size: 16px;
+  font-weight: 500;
+  transform: scale(1.3)
+}
+
+.duty-card__shark {
+  position: absolute;
+  z-index: 1;
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.duty-card__shark--left {
+  left: 10px;
+  bottom: 5px;
+  transform: rotate(157.5deg);
+}
+
+.duty-card__shark--right {
+  right: 10px;
+  bottom: 40px;
+  transform: rotate(-22.5deg);
+}
+
+.user-message {
+  margin: -34px auto 26px;
+  color: white;
+  font-family: var(--poppins);
+  font-size: 18px;
+  text-align: center;
+}
+
+.user-message--error {
+  color: #ffd2c2;
+}
