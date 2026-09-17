@@ -7,6 +7,7 @@ import { LoginInput } from "../inputs/LoginInput";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { sharkinApi } from "@/api/api";
+import { useNavigate } from "react-router";
 
 type LoginFormType = {
   email: string;
@@ -15,6 +16,7 @@ type LoginFormType = {
 
 export function LoginCard() {
   const [loginError, setLoginError] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   const {
     register,
@@ -32,6 +34,8 @@ export function LoginCard() {
       });
 
       localStorage.setItem("token", data.accessToken);
+
+      navigate("/usuario");
     } catch (err) {
       if (axios.isAxiosError(err)) {
         if (err.response) {
