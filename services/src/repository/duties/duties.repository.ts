@@ -27,6 +27,22 @@ export class DutyRepository {
     });
   }
 
+  async findOpenDuties() {
+    return await prisma.duty.findMany({
+      where: {
+        dateTime_out: null,
+      },
+      select: {
+        dateTime_in: true,
+        user: {
+          select: {
+            name: true,
+          },
+        },
+      },
+    });
+  }
+
   async create(userId: string): Promise<Duty> {
     return prisma.duty.create({
       data: {
