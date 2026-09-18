@@ -10,6 +10,11 @@ export class DutyController {
     return await this.dutyService.findAllDuties();
   }
 
+  @Get('/open')
+  async findAllOpenDuties() {
+    return this.dutyService.findAllOpenDuties();
+  }
+
   @Get('/:id')
   async findAllDutiesByUser(@Param('id') userId: string) {
     return await this.dutyService.findAllDutiesByUser(userId);

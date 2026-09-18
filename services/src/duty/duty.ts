@@ -33,6 +33,12 @@ export class Duty {
     return await this.dutyRepo.findByUser(userId);
   }
 
+  async findAllOpenDuties() {
+    const onylOpenDuties = await this.dutyRepo.findOpenDuties();
+
+    return onylOpenDuties;
+  }
+
   async closeDuty(userId: string) {
     const lastDutyRegistered =
       await this.dutyRepo.findLastOpenDutyByUser(userId);
