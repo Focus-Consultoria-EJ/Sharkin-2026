@@ -1,0 +1,378 @@
+/* ==================================================
+   Página
+   ================================================== */
+
+.auth-page {
+  min-height: 100vh;
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  padding: 40px 20px;
+  color: var(--dark-blue);
+  background-image:
+    url("../assets/focus/wave_bg.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+/* ==================================================
+   Cartão
+   ================================================== */
+
+.auth-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--white);
+  box-shadow: 0 7px 18px rgb(0 0 0 / 40%);
+}
+
+.auth-card--wide {
+  width: min(585px, calc(100vw - 40px));
+  min-height: 408px;
+  padding: 64px 73px 52px;
+  border-radius: 44px;
+}
+
+.auth-card--compact {
+  width: min(430px, calc(100vw - 40px));
+  min-height: 521px;
+  padding: 45px 53px 50px;
+  border-radius: 32px;
+}
+
+.auth-card__header,
+.auth-form {
+  position: relative;
+  z-index: 2;
+}
+
+/* ==================================================
+   Título e subtítulo
+   ================================================== */
+
+.auth-card__header h1 {
+  margin: 0;
+  color: var(--dark-blue);
+  font-family: var(--poppins);
+  font-size: 56px;
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -1px;
+  text-shadow: 2px 3px 4px rgb(0 0 0 / 22%);
+}
+
+.auth-card__subtitle {
+  max-width: 440px;
+  margin: 8px 0 0;
+  color: var(--header-text-color);
+  font-family: var(--poppins);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.45;
+}
+
+/* ==================================================
+   Adornos dos cantos
+   ================================================== */
+
+.auth-card__accent {
+  position: absolute;
+  z-index: 3;
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+  transform-origin: center;
+}
+
+/*
+ * Forward:
+ * usado em Recuperar senha e Redefinir senha.
+ *
+ * Primeiro adorno: superior esquerdo.
+ * Segundo adorno: inferior direito.
+ *
+ * Neste posicionamento, os adornos também
+ * precisam ser rotacionados.
+ */
+
+.auth-card--accent-forward
+  .auth-card__accent--first {
+  top: -36px;
+  left: -36px;
+  transform: rotate(0deg);
+}
+
+.auth-card--accent-forward
+  .auth-card__accent--second {
+  right: -36px;
+  bottom: -36px;
+  transform: rotate(180deg);
+}
+
+/*
+ * Reverse:
+ * usado na página de cadastro.
+ *
+ * Primeiro adorno: superior direito.
+ * Segundo adorno: inferior esquerdo.
+ */
+
+.auth-card--accent-reverse
+  .auth-card__accent--first {
+  top: -36px;
+  right: -36px;
+  transform: scaleX(-1);
+}
+
+.auth-card--accent-reverse
+  .auth-card__accent--second {
+  bottom: -36px;
+  left: -36px;
+  transform: scaleY(-1);
+}
+
+/* ==================================================
+   Formulários
+   ================================================== */
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 31px;
+}
+
+.auth-form--recover {
+  gap: 0;
+}
+
+.auth-form--reset,
+.auth-form--register {
+  gap: 14px;
+}
+
+/* ==================================================
+   Campos
+   ================================================== */
+
+.auth-field {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 46px;
+  overflow: hidden;
+  border: 1.5px solid var(--blue-medium);
+  border-radius: 9px;
+  color: #5f7181;
+  background-color: var(--light-blue);
+}
+
+.auth-field:focus-within {
+  outline: 3px solid rgb(0 81 255 / 20%);
+}
+
+/* ==================================================
+   Input
+   ================================================== */
+
+.auth-field input {
+  width: 100%;
+  height: 100%;
+  padding: 0 52px 0 68px;
+  border: 0;
+  outline: 0;
+  color: var(--header-text-color);
+  background-color: transparent;
+  font-family: var(--poppins);
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.auth-field input::placeholder {
+  color: #607180;
+  opacity: 1;
+}
+
+/* ==================================================
+   Ícone esquerdo do campo
+   ================================================== */
+
+.auth-field__leading-icon {
+  position: absolute;
+  left: 20px;
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  opacity: 0.6;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ==================================================
+   Mostrar e ocultar senha
+   ================================================== */
+
+.auth-field__visibility {
+  position: absolute;
+  right: 12px;
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  padding: 2px;
+  border: 0;
+  border-radius: 4px;
+  color: #5f7181;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.auth-field__visibility img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0.55;
+  pointer-events: none;
+  user-select: none;
+}
+
+.auth-field__visibility:hover img {
+  opacity: 0.8;
+}
+
+.auth-field__visibility:focus-visible {
+  outline: 2px solid var(--blue-medium);
+  outline-offset: 1px;
+}
+
+/* ==================================================
+   Botão principal
+   ================================================== */
+
+.auth-button {
+  min-width: 195px;
+  height: 84px;
+  align-self: center;
+  padding: 0 38px;
+  border: 0;
+  border-radius: 999px;
+  color: var(--white);
+  background-color: var(--blue-medium);
+  box-shadow: 0 4px 8px rgb(0 0 0 / 18%);
+  font-family: var(--montserrat);
+  font-size: 34px;
+  font-weight: 900;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    filter 150ms ease,
+    transform 100ms ease;
+}
+
+.auth-button:hover {
+  filter: brightness(1.08);
+}
+
+.auth-button:active {
+  transform: scale(0.98);
+}
+
+.auth-button:focus-visible {
+  outline: 3px solid rgb(0 81 255 / 35%);
+  outline-offset: 3px;
+}
+
+/* ==================================================
+   Espaçamento do botão em cada formulário
+   ================================================== */
+
+.auth-form--recover .auth-button {
+  margin-top: 29px;
+}
+
+.auth-form--reset .auth-button {
+  margin-top: 32px;
+}
+
+.auth-form--register .auth-button {
+  margin-top: 53px;
+}
+
+/* ==================================================
+   Variações do cadastro
+   ================================================== */
+
+.auth-card--compact .auth-card__header h1 {
+  font-size: 56px;
+}
+
+.auth-card--compact .auth-form {
+  margin-top: 37px;
+}
+
+.auth-card--compact .auth-field {
+  height: 34px;
+  border-radius: 7px;
+}
+
+.auth-card--compact .auth-field input {
+  padding-right: 40px;
+  padding-left: 50px;
+  font-size: 16px;
+}
+
+.auth-card--compact
+  .auth-field__leading-icon {
+  left: 10px;
+  width: 25px;
+  height: 25px;
+}
+
+.auth-card--compact
+  .auth-field__visibility {
+  right: 8px;
+  width: 25px;
+  height: 25px;
+}
+
+.auth-card--compact .auth-button {
+  width: 196px;
+  height: 62px;
+  padding: 0 20px;
+  font-size: 24px;
+}
+
+/* ==================================================
+   Label acessível
+   ================================================== */
+
+.auth-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ==================================================
+   Autofill do navegador
+   ================================================== */
+
+.auth-field input:-webkit-autofill,
+.auth-field input:-webkit-autofill:hover,
+.auth-field input:-webkit-autofill:focus {
+  -webkit-text-fill-color:
+    var(--header-text-color);
+
+  -webkit-box-shadow:
+    0 0 0 1000px var(--light-blue) inset;
+
+  box-shadow:
+    0 0 0 1000px var(--light-blue) inset;
+}
