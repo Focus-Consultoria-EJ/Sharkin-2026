@@ -18,6 +18,10 @@ export class Duty {
       throw new BadRequestException('Usuário não encontrado');
     }
 
+    if ((await this.dutyRepo.findLastOpenDutyByUser(userId)) !== null)
+      throw new BadRequestException(
+        'Não pode abrir um plantão novo enquanto tiver outro aberto',
+      );
     return this.dutyRepo.create(userId);
   }
 

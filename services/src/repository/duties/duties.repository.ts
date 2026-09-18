@@ -22,6 +22,7 @@ export class DutyRepository {
     return await prisma.duty.findFirst({
       where: {
         dateTime_out: null,
+        user_id: userId,
       },
     });
   }
