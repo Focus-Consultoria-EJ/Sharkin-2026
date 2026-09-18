@@ -7,25 +7,7 @@ import { sharkinApi } from "@/api/api";
 import { jwtDecode } from "jwt-decode";
 import { AxiosError } from "axios";
 import { formatDutyDate } from "@/functions/formatDutyDate";
-// const mockDuties = Array.from(
-//   { length: 12 },
-//   (_, index) => ({
-//     id: index + 1,
-//     date: "02/09/2026",
-//     time: "14:30 — 18:45",
-//   }),
-// );
-
-type JwtPayload = {
-  sub: string;
-  username: string;
-};
-
-type CardData = {
-  name: string;
-  dateTime_in: string;
-  dateTime_out: string;
-};
+import type { JwtPayload, CardData } from "@/types/uiTypes";
 
 export function UserPage() {
   const [name, setName] = useState<string>("");
@@ -70,12 +52,15 @@ export function UserPage() {
         <section className="duties-grid" aria-label="Histórico de plantões">
           {duties?.map((duty, index) => {
             const { date, time } = formatDutyDate(duty.dateTime_in);
-            const timeOut = formatDutyDate(duty.dateTime_out);
+            let timeOut = null;
+            if (duty.dateTime_out !== null) {
+              timeOut = formatDutyDate(duty.dateTime_out);
+            }
             return (
               <DutyCard
                 key={index}
                 date={date}
-                time={`${time} — ${timeOut.time}`}
+                time={timeOut ? `${time} — ${timeOut.time}` : `${time} — `}
               />
             );
           })}
