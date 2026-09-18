@@ -12,31 +12,35 @@ import type { JwtPayload, CardData } from "@/types/uiTypes";
 export function UserPage() {
   const [name, setName] = useState<string>("");
   const [duties, setDuties] = useState<CardData[] | null>(null);
+  const [userHasOpenDuty, setUserHasOpenDuty] = useState<boolean>(false);
+
+  const fetchDuties = async () => {
+    const token = localStorage.getItem("token");
+    const { sub, username } = jwtDecode<JwtPayload>(token!);
+
+    setName(username);
+
+    try {
+      const { data } = await sharkinApi.get(`/duty/${sub}`);
+      const formatted: CardData[] = data.map((duty: any) => ({
+        name: username,
+        dateTime_in: duty.dateTime_in,
+        dateTime_out: duty.dateTime_out,
+      }));
+
+      const hasOpenDuty = data.some((duty: any) => duty.dateTime_out === null);
+      setUserHasOpenDuty(hasOpenDuty);
+
+      setDuties(formatted);
+    } catch (err) {
+      if (err instanceof AxiosError) {
+        console.log("Erro ao buscar plantões");
+        console.log(err);
+      }
+    }
+  };
 
   useEffect(() => {
-    const fetchDuties = async () => {
-      const token = localStorage.getItem("token");
-      const { sub, username } = jwtDecode<JwtPayload>(token!);
-
-      setName(username);
-
-      try {
-        const { data } = await sharkinApi.get(`/duty/${sub}`);
-        const formatted: CardData[] = data.map((duty: any) => ({
-          name: username,
-          dateTime_in: duty.dateTime_in,
-          dateTime_out: duty.dateTime_out,
-        }));
-
-        setDuties(formatted);
-      } catch (err) {
-        if (err instanceof AxiosError) {
-          console.log("Erro ao buscar plantões");
-          console.log(err);
-        }
-      }
-    };
-
     fetchDuties();
   }, []);
 
@@ -46,7 +50,10 @@ export function UserPage() {
 
       <main>
         <section className="user-action">
-          <DutyToggleButton />
+          <DutyToggleButton
+            onToggleSuccess={fetchDuties}
+            hasOpenDuty={userHasOpenDuty}
+          />
         </section>
 
         <section className="duties-grid" aria-label="Histórico de plantões">

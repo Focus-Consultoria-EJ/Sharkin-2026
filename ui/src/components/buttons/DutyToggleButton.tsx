@@ -2,10 +2,18 @@ import { sharkinApi } from "@/api/api";
 import type { JwtPayload } from "@/types/uiTypes";
 import { AxiosError } from "axios";
 import { jwtDecode } from "jwt-decode";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-export function DutyToggleButton() {
-  const [isSharkOut, setIsSharkOut] = useState(false);
+type DutyToggleProps = {
+  onToggleSuccess: () => void;
+  hasOpenDuty: boolean;
+};
+
+export function DutyToggleButton({
+  onToggleSuccess,
+  hasOpenDuty,
+}: DutyToggleProps) {
+  const [isSharkOut, setIsSharkOut] = useState(hasOpenDuty);
   const [isLoading, setIsLoading] = useState(false);
 
   async function handleClick() {
@@ -20,13 +28,20 @@ export function DutyToggleButton() {
         : await sharkinApi.post(`/duty/${sub}`, {});
       setIsSharkOut((currentState) => !currentState);
       setIsLoading(false);
+      onToggleSuccess();
     } catch (err) {
       if (err instanceof AxiosError) {
         console.log("Erro ao fazer sharkin ou sharkout");
         console.log(err.response?.data);
       }
+    } finally {
+      setIsLoading(false);
     }
   }
+
+  useEffect(() => {
+    setIsSharkOut(hasOpenDuty);
+  }, [hasOpenDuty]);
 
   return (
     <button
