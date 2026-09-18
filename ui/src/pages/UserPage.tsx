@@ -1,39 +1,84 @@
+import "@/styles/user_styles.css";
 import { DutyToggleButton } from "@/components/buttons/DutyToggleButton";
 import { DutyCard } from "@/components/cards/DutyCard";
 import { UserHeader } from "@/components/headers/UserHeader";
+import { useEffect, useState } from "react";
+import { sharkinApi } from "@/api/api";
+import { jwtDecode } from "jwt-decode";
+import { AxiosError } from "axios";
+import { formatDutyDate } from "@/functions/formatDutyDate";
+// const mockDuties = Array.from(
+//   { length: 12 },
+//   (_, index) => ({
+//     id: index + 1,
+//     date: "02/09/2026",
+//     time: "14:30 — 18:45",
+//   }),
+// );
 
-import "@/styles/user_styles.css";
+type JwtPayload = {
+  sub: string;
+  username: string;
+};
 
-const mockDuties = Array.from(
-  { length: 12 },
-  (_, index) => ({
-    id: index + 1,
-    date: "02/09/2026",
-    time: "14:30 — 18:45",
-  }),
-);
+type CardData = {
+  name: string;
+  dateTime_in: string;
+  dateTime_out: string;
+};
 
 export function UserPage() {
+  const [name, setName] = useState<string>("");
+  const [duties, setDuties] = useState<CardData[] | null>(null);
+
+  useEffect(() => {
+    const fetchDuties = async () => {
+      const token = localStorage.getItem("token");
+      const { sub, username } = jwtDecode<JwtPayload>(token!);
+
+      setName(username);
+
+      try {
+        const { data } = await sharkinApi.get(`/duty/${sub}`);
+        const formatted: CardData[] = data.map((duty: any) => ({
+          name: username,
+          dateTime_in: duty.dateTime_in,
+          dateTime_out: duty.dateTime_out,
+        }));
+
+        setDuties(formatted);
+      } catch (err) {
+        if (err instanceof AxiosError) {
+          console.log("Erro ao buscar plantões");
+          console.log(err);
+        }
+      }
+    };
+
+    fetchDuties();
+  }, []);
+
   return (
     <div className="user-page">
-      <UserHeader />
+      <UserHeader name={name!} />
 
       <main>
         <section className="user-action">
           <DutyToggleButton />
         </section>
 
-        <section
-          className="duties-grid"
-          aria-label="Histórico de plantões"
-        >
-          {mockDuties.map((duty) => (
-            <DutyCard
-              key={duty.id}
-              date={duty.date}
-              time={duty.time}
-            />
-          ))}
+        <section className="duties-grid" aria-label="Histórico de plantões">
+          {duties?.map((duty, index) => {
+            const { date, time } = formatDutyDate(duty.dateTime_in);
+            const timeOut = formatDutyDate(duty.dateTime_out);
+            return (
+              <DutyCard
+                key={index}
+                date={date}
+                time={`${time} — ${timeOut.time}`}
+              />
+            );
+          })}
         </section>
       </main>
     </div>

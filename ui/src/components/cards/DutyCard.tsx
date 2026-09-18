@@ -5,10 +5,7 @@ type DutyCardProps = {
   time: string;
 };
 
-export function DutyCard({
-  date,
-  time,
-}: DutyCardProps) {
+export function DutyCard({ date, time }: DutyCardProps) {
   return (
     <article className="duty-card">
       <p className="duty-card__date">{date}</p>
