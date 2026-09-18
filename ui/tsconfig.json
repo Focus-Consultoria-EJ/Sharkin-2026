@@ -28,7 +28,8 @@
       "@/styles/*": ["./src/styles/*"],
       "@/components/*": ["./src/components/*"],
       "@/api/*": ["./src/api/*"],
-      "@/types/*": ["./src/types/*"]
+      "@/types/*": ["./src/types/*"],
+      "@/functions/*": ["./src/functions/*"]
     },
 
     // Some stricter flags (disabled by default)

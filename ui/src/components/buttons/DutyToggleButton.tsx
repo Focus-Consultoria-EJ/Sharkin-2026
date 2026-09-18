@@ -21,7 +21,6 @@ export function DutyToggleButton({
 
     const token = localStorage.getItem("token");
     const { sub } = jwtDecode<JwtPayload>(token!);
-    console.log(sub);
     try {
       isSharkOut
         ? await sharkinApi.patch(`/duty/${sub}`, {})

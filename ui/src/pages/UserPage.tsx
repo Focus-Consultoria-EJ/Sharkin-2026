@@ -8,6 +8,7 @@ import { jwtDecode } from "jwt-decode";
 import { AxiosError } from "axios";
 import { formatDutyDate } from "@/functions/formatDutyDate";
 import type { JwtPayload, CardData } from "@/types/uiTypes";
+import { sortDuties } from "@/functions/sortingDuties";
 
 export function UserPage() {
   const [name, setName] = useState<string>("");
@@ -22,7 +23,8 @@ export function UserPage() {
 
     try {
       const { data } = await sharkinApi.get(`/duty/${sub}`);
-      const formatted: CardData[] = data.map((duty: any) => ({
+      const sorted = sortDuties(data);
+      const formatted: CardData[] = sorted.map((duty: any) => ({
         name: username,
         dateTime_in: duty.dateTime_in,
         dateTime_out: duty.dateTime_out,
