@@ -7,7 +7,7 @@ import { LoginInput } from "../inputs/LoginInput";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { sharkinApi } from "@/api/api";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 type LoginFormType = {
   email: string;
@@ -66,18 +66,21 @@ export function LoginCard() {
         <div className="flex flex-col gap-6">
           <LoginInput type="email" img={mail} {...register("email")} />
           <LoginInput type="password" img={lock} {...register("password")} />
-          {/* Colocar link para a página de redefinir senha, posteriormente
-            Por hora esse trecho tem fins exclusivamente estéticos
-        */}
+          
           <div className="flex flex-col gap-2">
             {loginError && (
               <p className="font-[400] text-[17.23px] text-montserrat text-red-600 ">
                 {loginError}
               </p>
             )}
-            <p className="font-[400] text-[19.23px] text-montserrat">
-              Esqueceu a senha?
-            </p>
+            <div className="flex justify-between items-center w-full text-[16px] text-montserrat">
+              <Link to="/recuperar-senha" className="hover:underline">
+                Esqueceu a senha?
+              </Link>
+              <Link to="/cadastro" className="hover:underline">
+                Cadastre-se
+              </Link>
+            </div>
           </div>
         </div>
         <div className="mt-13">
