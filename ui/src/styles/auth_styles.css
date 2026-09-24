@@ -376,3 +376,41 @@
   box-shadow:
     0 0 0 1000px var(--light-blue) inset;
 }
+
+/* ==================================================
+   Validação e envio dos formulários
+   ================================================== */
+
+.auth-control {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.auth-field:has(input[aria-invalid="true"]) {
+  border-color: #c62828;
+}
+
+.auth-field__error,
+.auth-form__error {
+  margin: 0;
+  color: #c62828;
+  font-family: var(--poppins);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.auth-form__error {
+  text-align: center;
+}
+
+.auth-button:disabled {
+  cursor: not-allowed;
+  filter: grayscale(0.25);
+  opacity: 0.65;
+}
+
+.auth-button:disabled:active {
+  transform: none;
+}
