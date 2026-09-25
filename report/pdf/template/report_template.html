@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="report_style.css" />
+  </head>
+
+  <body>
+    <main class="report">
+      <header class="report-header">
+        <div class="brand">
+          <div class="brand-mark"></div>
+
+          <div>
+            <span class="brand-name">Focus Consultoria</span>
+            <span class="brand-subtitle">Relatório de atividades</span>
+          </div>
+        </div>
+
+        <div class="header-content">
+          <h1>Relatório Semanal</h1>
+
+          <p>{{ period_start }} — {{ period_end }}</p>
+        </div>
+      </header>
+
+      <section class="days">
+        {% for day in days %}
+
+        <section class="day-card">
+          <div class="day-header">
+            <div class="day-info">
+              <div>
+                <h2>{{ day.name }}</h2>
+
+                <span class="day-date"> {{ day.date }} </span>
+              </div>
+            </div>
+          </div>
+
+          {% if day.entries %}
+
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Hora de entrada</th>
+                  <th>Hora de saída</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {% for entry in day.entries %}
+
+                <tr>
+                  <td class="name">{{ entry.name }}</td>
+
+                  <td>
+                    <span class="time"> {{ entry.entry_time }} </span>
+                  </td>
+
+                  <td>
+                    <span class="time"> {{ entry.exit_time }} </span>
+                  </td>
+                </tr>
+
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+
+          {% else %}
+
+          <div class="empty-state">Nenhum registro neste dia.</div>
+
+          {% endif %}
+        </section>
+
+        {% endfor %}
+      </section>
+
+      <footer class="report-footer">
+        <span> Documento gerado automaticamente </span>
+
+        <span> {{ generated_at }} </span>
+      </footer>
+    </main>
+  </body>
+</html>
