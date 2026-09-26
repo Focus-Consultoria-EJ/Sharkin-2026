@@ -8,8 +8,8 @@ def fetchDuties(start_date, end_date):
         SELECT duties."dateTime_in" ,duties."dateTime_out", users.name 
         FROM duties 
         INNER JOIN users ON duties.user_id = users.user_id
-        WHERE duties."dateTime_in" >= :start_date
-        AND duties."dateTime_in" < :end_date
+        WHERE duties."dateTime_in"::date >= :start_date
+        AND duties."dateTime_in"::date <= :end_date 
         ORDER BY duties."dateTime_in";
         """)
 
