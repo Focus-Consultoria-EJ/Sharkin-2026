@@ -1,0 +1,320 @@
+@page {
+  size: A4;
+  margin: 12mm;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  color: #17365f;
+
+  font-family: "DejaVu Sans", Arial, sans-serif;
+
+  font-size: 10pt;
+}
+
+.report {
+  width: 100%;
+
+  margin: 0 auto;
+  padding: 12mm;
+
+  background: #ffffff;
+
+  border-radius: 8mm;
+
+  box-shadow: 0 4mm 12mm rgba(31, 73, 125, 0.18);
+
+  position: relative;
+}
+
+.report-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding-bottom: 8mm;
+  margin-bottom: 7mm;
+
+  border-bottom: 1px solid #dce8f5;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+
+  gap: 3mm;
+}
+
+.brand-mark {
+  width: 10mm;
+  height: 10mm;
+
+  border-radius: 3mm;
+}
+
+.brand-mark img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.brand-name {
+  color: #173f72;
+
+  font-size: 8pt;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.brand-subtitle {
+  display: block;
+
+  margin-top: 1mm;
+
+  color: #7c91aa;
+
+  font-size: 7pt;
+}
+
+.header-content {
+  text-align: right;
+}
+
+.eyebrow {
+  display: block;
+
+  margin-bottom: 1mm;
+
+  color: #3182e8;
+
+  font-size: 7pt;
+  font-weight: 700;
+
+  letter-spacing: 0.12em;
+}
+
+h1 {
+  margin: 0;
+
+  color: #123c70;
+
+  font-size: 22pt;
+  font-weight: 700;
+
+  letter-spacing: -0.03em;
+}
+
+thead {
+  display: table-header-group;
+}
+
+.header-content p {
+  margin: 2mm 0 0;
+
+  color: #7890aa;
+
+  font-size: 8pt;
+}
+
+.days {
+  display: block;
+}
+
+.day-card {
+  background: #ffffff;
+
+  border: 1px solid #dfeaf6;
+  border-radius: 4mm;
+  margin-bottom: 5mm;
+  padding: 4mm;
+
+  box-shadow: 0 1.5mm 4mm rgba(36, 86, 140, 0.08);
+}
+
+.day-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 3mm;
+}
+
+.day-info {
+  display: flex;
+  align-items: center;
+
+  gap: 3mm;
+}
+
+.day-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 17mm;
+  height: 9mm;
+
+  border-radius: 2.5mm;
+
+  background: linear-gradient(135deg, #1769e0, #4b9cf5);
+
+  color: #ffffff;
+
+  font-size: 7.5pt;
+  font-weight: 700;
+}
+
+.day-info h2 {
+  margin: 0;
+
+  color: #163f72;
+
+  font-size: 11pt;
+  font-weight: 700;
+}
+
+.day-date {
+  display: block;
+
+  margin-top: 0.8mm;
+
+  color: #8a9eb4;
+
+  font-size: 7.5pt;
+}
+
+.record-count {
+  padding: 1.8mm 3mm;
+
+  border-radius: 2mm;
+
+  background: #eaf3fc;
+
+  color: #3276b9;
+
+  font-size: 7pt;
+  font-weight: 600;
+}
+
+.table-wrapper {
+  border: 1px solid #e2ebf4;
+  border-radius: 2.5mm;
+}
+
+table {
+  width: 100%;
+
+  border-collapse: collapse;
+
+  table-layout: fixed;
+}
+
+thead {
+  background: #edf5fc;
+}
+
+th {
+  padding: 2.5mm 3mm;
+
+  color: #315b86;
+
+  font-size: 7.5pt;
+  font-weight: 700;
+
+  text-align: left;
+
+  border-bottom: 1px solid #d9e6f2;
+}
+
+td {
+  padding: 2.7mm 3mm;
+
+  color: #526f8d;
+
+  font-size: 8pt;
+
+  border-bottom: 1px solid #edf2f7;
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+tbody tr:nth-child(even) {
+  background: #fafcff;
+}
+
+.name {
+  color: #214c7b;
+  font-weight: 600;
+}
+
+.time {
+  display: inline-block;
+
+  min-width: 17mm;
+
+  padding: 1mm 2mm;
+
+  border-radius: 1.5mm;
+
+  background: #f0f6fc;
+
+  color: #315f8d;
+
+  font-family: "DejaVu Sans Mono", monospace;
+
+  font-size: 7.5pt;
+  font-weight: 600;
+
+  text-align: center;
+}
+
+.empty-state {
+  padding: 5mm;
+
+  border: 1px dashed #cbdbea;
+  border-radius: 2.5mm;
+
+  background: #fafcff;
+
+  color: #8ba0b5;
+
+  font-size: 8pt;
+
+  text-align: center;
+}
+
+.report-footer {
+  display: flex;
+  justify-content: space-between;
+
+  margin-top: 7mm;
+  padding-top: 4mm;
+
+  border-top: 1px solid #dce8f5;
+
+  color: #94a8bb;
+
+  font-size: 6.5pt;
+}
+
+@media print {
+  .report {
+    box-shadow: 0 4mm 12mm rgba(31, 73, 125, 0.18);
+  }
+
+  tr {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+}

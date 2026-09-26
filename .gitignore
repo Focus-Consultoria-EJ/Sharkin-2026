@@ -37,3 +37,6 @@ services/generated/prisma
 
 #testes de requisição
 services/requests.rest 
+.zcodeignore
+__pycache__
+reports
