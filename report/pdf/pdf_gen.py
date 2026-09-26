@@ -1,55 +1,32 @@
+from datetime import datetime
 from jinja2 import Environment, FileSystemLoader
 from weasyprint import HTML,CSS
 from pathlib import Path
 
 
-baseDir = Path(__file__).resolve().parent
-templateDir = baseDir / "template"
+def genPdf(days):
 
-env = Environment(
-    loader=FileSystemLoader(templateDir)
-)
+    baseDir = Path(__file__).resolve().parent
+    templateDir = baseDir / "template"
 
-template = env.get_template("report_template.html")
+    env = Environment(
+        loader=FileSystemLoader(templateDir)
+    )
 
-days = [
-    {
-        "name": "Segunda-feira",
-        "date": "21/09/2026",
-        "entries": [
-            {
-                "name": "João Silva",
-                "entry_time": "08:00",
-                "exit_time": "17:00",
-            },
-            {
-                "name": "Maria Santos",
-                "entry_time": "08:15",
-                "exit_time": "17:30",
-            },
-        ],
-    },
-    {
-        "name": "Terça-feira",
-        "date": "22/09/2026",
-        "entries": [
-            {
-                "name": "João Silva",
-                "entry_time": "08:05",
-                "exit_time": "17:10",
-            },
-        ],
-    },
-]
+    template = env.get_template("report_template.html")
 
-html = template.render(
-    title="Relatório Semanal",
-    days=days,
-)
+    html = template.render(
+        title="Relatório Semanal",
+        days=days,
+    )
 
-HTML(string=html).write_pdf(
-    "reports/report.pdf",
-    stylesheets=[
-        CSS(filename=str(templateDir / "report_style.css"))
-    ]
-)
+    archName = f"report-{datetime.now()}.pdf"
+
+    HTML(string=html).write_pdf(
+        f"reports/{archName}",
+        stylesheets=[
+            CSS(filename=str(templateDir / "report_style.css"))
+        ]
+    )
+
+    return archName
