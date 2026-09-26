@@ -120,9 +120,7 @@ thead {
 }
 
 .days {
-  display: flex;
-  flex-direction: column;
-  gap: 5mm;
+  display: block;
 }
 
 .day-card {
@@ -130,7 +128,7 @@ thead {
 
   border: 1px solid #dfeaf6;
   border-radius: 4mm;
-
+  margin-bottom: 5mm;
   padding: 4mm;
 
   box-shadow: 0 1.5mm 4mm rgba(36, 86, 140, 0.08);

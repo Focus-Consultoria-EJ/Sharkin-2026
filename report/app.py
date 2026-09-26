@@ -20,5 +20,5 @@ def main():
     pdfName = genPdf(days)
     print(f"PDF gerado:{pdfName}")
     reportPath = Path(f"reports/{pdfName}")
-    # send_report(reportPath)
+    send_report(reportPath)
 main()
