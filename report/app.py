@@ -23,14 +23,14 @@ def main():
     send_report(reportPath)
 
 main()
-# scheduler = BlockingScheduler(timezone="America/Sao_Paulo")
+scheduler = BlockingScheduler(timezone="America/Sao_Paulo")
 
-# scheduler.add_job(
-#     main,
-#     trigger="cron",
-#     day_of_week="fri",
-#     hour=18,
-#     minute=20,
-# )
+scheduler.add_job(
+    main,
+    trigger="cron",
+    day_of_week="fri",
+    hour=18,
+    minute=20,
+)
 
-# scheduler.start()
+scheduler.start()
