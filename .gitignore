@@ -40,3 +40,5 @@ services/requests.rest
 .zcodeignore
 __pycache__
 reports
+
+playground/
