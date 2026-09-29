@@ -19,7 +19,8 @@
     "paths": {
       "@lib/*": ["./lib/*"],
       "@repository/*": ["./src/repository/*"],
-      "@generated/*": ["./generated/*"]
+      "@generated/*": ["./generated/*"],
+      "@config/*": ["./src/config/*"]
     },
 
     "incremental": true
