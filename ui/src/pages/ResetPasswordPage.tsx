@@ -1,17 +1,24 @@
 import type { SubmitEvent } from "react";
+import { useNavigate } from "react-router";
+
 import { AuthButton } from "@/components/auth/AuthButton";
 import { AuthField } from "@/components/auth/AuthField";
 import { AuthLayout } from "@/components/auth/AuthLayout";
+import { usePasswordRecovery } from "@/contexts/PasswordRecoveryContext";
 
 import eyeIcon from "@/assets/symbols/eye.png";
 import eyeOffIcon from "@/assets/symbols/eye_off.png";
 import lockIcon from "@/assets/symbols/lock.png";
 
 export function ResetPasswordPage() {
-  function handleSubmit(
-    event: SubmitEvent<HTMLFormElement>,
-  ) {
+  const navigate = useNavigate();
+  const { finishRecovery } = usePasswordRecovery();
+
+  function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
+
+    finishRecovery();
+    navigate("/", { replace: true });
   }
 
   return (
@@ -20,10 +27,7 @@ export function ResetPasswordPage() {
       subtitle="Digite sua nova senha."
       accent="forward"
     >
-      <form
-        className="auth-form auth-form--reset"
-        onSubmit={handleSubmit}
-      >
+      <form className="auth-form auth-form--reset" onSubmit={handleSubmit}>
         <AuthField
           id="new-password"
           type="password"

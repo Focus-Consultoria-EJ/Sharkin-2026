@@ -7,6 +7,7 @@ import { LoginInput } from "../inputs/LoginInput";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { sharkinApi } from "@/api/api";
+import { usePasswordRecovery } from "@/contexts/PasswordRecoveryContext";
 import { Link, useNavigate } from "react-router";
 
 type LoginFormType = {
@@ -17,6 +18,7 @@ type LoginFormType = {
 export function LoginCard() {
   const [loginError, setLoginError] = useState<string | null>(null);
   const navigate = useNavigate();
+  const { startRecovery } = usePasswordRecovery();
 
   const {
     register,
@@ -66,7 +68,7 @@ export function LoginCard() {
         <div className="flex flex-col gap-6">
           <LoginInput type="email" img={mail} {...register("email")} />
           <LoginInput type="password" img={lock} {...register("password")} />
-          
+
           <div className="flex flex-col gap-2">
             {loginError && (
               <p className="font-[400] text-[17.23px] text-montserrat text-red-600 ">
@@ -74,7 +76,11 @@ export function LoginCard() {
               </p>
             )}
             <div className="flex justify-between items-center w-full text-[16px] text-montserrat">
-              <Link to="/recuperar-senha" className="hover:underline">
+              <Link
+                to="/recuperar-senha"
+                className="hover:underline"
+                onClick={startRecovery}
+              >
                 Esqueceu a senha?
               </Link>
               <Link to="/cadastro" className="hover:underline">

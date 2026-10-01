@@ -2,11 +2,16 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { createBrowserRouter } from "react-router";
 import { RouterProvider } from "react-router/dom";
+
+import { RecoveryStepRoute } from "@/components/auth/RecoveryStepRoute";
+import { PasswordRecoveryProvider } from "@/contexts/PasswordRecoveryContext";
+
 import { LoginPage } from "./pages/LoginPage";
 import { UserPage } from "./pages/UserPage";
 import { RegisterPage } from "./pages/RegisterPage";
 import { ResetPasswordPage } from "./pages/ResetPasswordPage";
 import { RecoverPasswordPage } from "./pages/RecoverPasswordPage";
+import { VerificationCodePage } from "./pages/VerificationCodePage";
 import "./index.css";
 
 const routes = createBrowserRouter([
@@ -23,19 +28,37 @@ const routes = createBrowserRouter([
     Component: RegisterPage,
   },
   {
-    path: "/redefinir-senha",
-    Component: ResetPasswordPage,
+    path: "/recuperar-senha",
+    element: (
+      <RecoveryStepRoute expectedStep="email">
+        <RecoverPasswordPage />
+      </RecoveryStepRoute>
+    ),
   },
   {
-    path: "/recuperar-senha",
-    Component: RecoverPasswordPage,
+    path: "/verificar-codigo",
+    element: (
+      <RecoveryStepRoute expectedStep="code">
+        <VerificationCodePage />
+      </RecoveryStepRoute>
+    ),
+  },
+  {
+    path: "/redefinir-senha",
+    element: (
+      <RecoveryStepRoute expectedStep="password">
+        <ResetPasswordPage />
+      </RecoveryStepRoute>
+    ),
   },
 ]);
 
 const elem = document.getElementById("root")!;
 const app = (
   <StrictMode>
-    <RouterProvider router={routes} />
+    <PasswordRecoveryProvider>
+      <RouterProvider router={routes} />
+    </PasswordRecoveryProvider>
   </StrictMode>
 );
 
