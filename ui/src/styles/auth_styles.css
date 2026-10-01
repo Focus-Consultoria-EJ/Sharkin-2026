@@ -414,3 +414,137 @@
 .auth-button:disabled:active {
   transform: none;
 }
+
+/* ==================================================
+   Verificação do código de recuperação
+   ================================================== */
+
+.auth-form--verification {
+  gap: 0;
+  margin-top: 24px;
+}
+
+.verification-back-link {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 8px;
+  margin-bottom: 25px;
+  color: var(--header-text-color);
+  font-family: var(--montserrat);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.verification-back-link span {
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 0.7;
+  transition: transform 150ms ease;
+}
+
+.verification-back-link:hover {
+  color: var(--blue-medium);
+}
+
+.verification-back-link:hover span {
+  transform: translateX(-3px);
+}
+
+.verification-back-link:focus-visible {
+  border-radius: 4px;
+  outline: 2px solid var(--blue-medium);
+  outline-offset: 4px;
+}
+
+/* Grupo com os seis quadrados */
+
+.verification-code {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+}
+
+/* Cada quadrado do código */
+
+.verification-code__input {
+  width: 56px;
+  height: 64px;
+  padding: 0;
+  border: 2px solid var(--blue-medium);
+  border-radius: 10px;
+  outline: 0;
+  color: var(--dark-blue);
+  background-color: var(--light-blue);
+  font-family: var(--poppins);
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 1;
+  text-align: center;
+  caret-color: var(--blue-medium);
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease,
+    transform 150ms ease,
+    background-color 150ms ease;
+}
+
+.verification-code__input:hover {
+  background-color: rgb(197 222 247);
+}
+
+.verification-code__input:focus {
+  border-color: var(--blue-medium);
+  background-color: var(--white);
+  box-shadow:
+    0 0 0 3px rgb(0 81 255 / 20%),
+    0 4px 8px rgb(0 0 0 / 12%);
+  transform: translateY(-2px);
+}
+
+/* Botão principal */
+
+.auth-form--verification .auth-button {
+  margin-top: 32px;
+}
+
+/* Reenvio do código */
+
+.verification-resend {
+  align-self: center;
+  margin-top: 22px;
+  padding: 6px 10px;
+  border: 0;
+  border-radius: 6px;
+  color: var(--subtext-color);
+  background-color: transparent;
+  font-family: var(--montserrat);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.verification-resend:hover {
+  color: var(--blue-medium);
+  text-decoration: underline;
+}
+
+.verification-resend:focus-visible {
+  outline: 2px solid var(--blue-medium);
+  outline-offset: 2px;
+}
+
+/* Autofill específico dos quadrados */
+
+.verification-code__input:-webkit-autofill,
+.verification-code__input:-webkit-autofill:hover,
+.verification-code__input:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--dark-blue);
+  -webkit-box-shadow:
+    0 0 0 1000px var(--white) inset;
+  box-shadow:
+    0 0 0 1000px var(--white) inset;
+}
