@@ -1,4 +1,5 @@
 import "@/styles/login_styles.css";
+import semi_circle from "@/assets/focus/90_degrees_circle.png";
 import mail from "@/assets/symbols/mail.png";
 import lock from "@/assets/symbols/lock.png";
 import axios from "axios";
@@ -57,10 +58,14 @@ export function LoginCard() {
 
   return (
     <div
-      className="flex flex-col gap-3 items-center 
-    w-[430px] h-[521px] rounded-[32px] login_card"
+      className="flex flex-col gap-3 items-center relative w-[430px] h-[521px] rounded-[32px] login_card"
     >
       <h2 className="login_title font-[400] text-[56.53px] p-10">Login</h2>
+      <img
+        src={semi_circle}
+        alt=""
+        className="semi_circle w-[90px] h-[90px]"
+      />
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col items-center"

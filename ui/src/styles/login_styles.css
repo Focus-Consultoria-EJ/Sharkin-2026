@@ -22,15 +22,15 @@
 
 .blue_shark {
   position: absolute;
-  right: 250px;
-  top: 5px;
+  right: 120;
+  top: 0;
   transform: rotate(42deg);
 }
 
 .semi_circle {
   position: absolute;
-  right: 175.5px;
-  top: 307px;
+  right: -36;
+  top: -36;
   transform: rotate(90deg);
 }
 

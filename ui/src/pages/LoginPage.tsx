@@ -1,8 +1,6 @@
 import "@/styles/login_styles.css";
 
 import { sharkinApi } from "@/api/api";
-import semi_circle from "@/assets/focus/90_degrees_circle.png";
-import blue_shark from "@/assets/focus/blue_shark.png";
 import { ActiveDutyCard } from "@/components/cards/ActiveDutyCard";
 import { LoginCard } from "@/components/cards/LoginCard";
 import { WelcomeHeader } from "@/components/headers/WelcomeHeader";
@@ -43,12 +41,7 @@ export function LoginPage() {
 
   return (
     <div className="page_layout">
-      <header className="relative">
-        <img
-          src={blue_shark}
-          alt=""
-          className="h-[198px] w-[198px] blue_shark"
-        />
+      <header>
         <WelcomeHeader />
       </header>
       <div className="grid grid-cols-[50vw_50vw]">
@@ -64,11 +57,6 @@ export function LoginPage() {
           })}
         </aside>
         <main className="flex justify-center items-start">
-          <img
-            src={semi_circle}
-            alt=""
-            className="w-[90px] h-[90px] semi_circle"
-          />
           <LoginCard />
         </main>
       </div>
