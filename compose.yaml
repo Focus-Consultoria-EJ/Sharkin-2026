@@ -1,34 +1,34 @@
 name: sharkin
 
 services:
-  # ui:
-  #   container_name: sharkin_ui
-  #   build:
-  #     context: ./ui
-  #   ports:
-  #     - 3000:3000
-  #   environment:
-  #     NODE_ENV: production
-  #     PORT: 3000
-  #   restart: unless-stopped
-  #   depends_on:
-  #     - services
+  ui:
+    container_name: sharkin_ui
+    build:
+      context: ./ui
+    ports:
+      - 3000:3000
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+    restart: unless-stopped
+    depends_on:
+      - services
 
-  # services:
-  #   container_name: sharkin_services
-  #   build:
-  #     context: ./services
-  #   ports:
-  #     - 3001:3001
-  #   environment:
-  #     NODE_ENV: production
-  #     PORT: 3001
-  #     DATABASE_URL: postgresql://admin:1234@postgres:5432/sharkin_database
-  #   env_file:
-  #     - ./services/.env
-  #   restart: unless-stopped
-  #   depends_on:
-  #     - postgres
+  services:
+    container_name: sharkin_services
+    build:
+      context: ./services
+    ports:
+      - 3001:3001
+    environment:
+      NODE_ENV: production
+      PORT: 3001
+      DATABASE_URL: postgresql://admin:1234@postgres:5432/sharkin_database
+    env_file:
+      - ./services/.env
+    restart: unless-stopped
+    depends_on:
+      - postgres
 
   postgres:
     container_name: sharkin_db
@@ -37,10 +37,41 @@ services:
       - postgres_volume:/var/lib/postgresql/data
     ports:
       - 5432:5432
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d sharkin_database"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
     environment:
       POSTGRES_DB: sharkin_database
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: 1234
+    restart: unless-stopped
+
+  report:
+    container_name: sharkin_report
+    build:
+      context: ./report
+    env_file:
+      - ./report/.env
+    environment:
+      DATABASE_URL: postgresql://admin:1234@postgres:5432/sharkin_database
+      TZ: America/Sao_Paulo # o agendamento (sexta, 18:20) depende do fuso
+    restart: unless-stopped
+    volumes:
+      - ./report/pdf/reports:/app/pdf/reports
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  redis:
+    container_name: sharkin_redis
+    image: redis:7
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
     restart: unless-stopped
 
 volumes:

@@ -21,8 +21,6 @@ def main():
     print(f"PDF gerado:{pdfName}")
     send_report(pdfPath)
 
-main()
-
 scheduler = BlockingScheduler(timezone="America/Sao_Paulo")
 
 scheduler.add_job(
