@@ -10,9 +10,10 @@ def image_to_data_uri(path: Path, mime="image/png"):
     return f"data:{mime};base64,{encoded}"
 
 def genPdf(days):
-
     baseDir = Path(__file__).resolve().parent
     templateDir = baseDir / "template"
+    reportsDir = baseDir / "reports"
+    reportsDir.mkdir(parents=True, exist_ok=True)
 
     env = Environment(
         loader=FileSystemLoader(templateDir)
@@ -30,12 +31,13 @@ def genPdf(days):
     )
 
     archName = f"report-{datetime.now()}.pdf"
+    pdfPath = reportsDir / archName
 
     HTML(string=html).write_pdf(
-        f"reports/{archName}",
+        str(pdfPath),
         stylesheets=[
             CSS(filename=str(templateDir / "report_style.css"))
         ]
     )
 
-    return archName
+    return archName, pdfPath

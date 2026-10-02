@@ -15,12 +15,11 @@ def main():
         start_date,
         today,
     )
-    print(duties)
+
     days: list[dict[str, list[Any] | str | Any]] = formatDays(duties)
-    pdfName = genPdf(days)
+    pdfName, pdfPath = genPdf(days)
     print(f"PDF gerado:{pdfName}")
-    reportPath = Path(f"reports/{pdfName}")
-    send_report(reportPath)
+    send_report(pdfPath)
 
 main()
 
