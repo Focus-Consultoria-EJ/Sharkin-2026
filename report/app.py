@@ -22,6 +22,8 @@ def main():
     reportPath = Path(f"reports/{pdfName}")
     send_report(reportPath)
 
+main()
+
 scheduler = BlockingScheduler(timezone="America/Sao_Paulo")
 
 scheduler.add_job(

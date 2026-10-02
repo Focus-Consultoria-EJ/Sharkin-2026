@@ -28,13 +28,24 @@ def send_report(pdf_path: Path):
     message["To"] = recipient
     message["Subject"] = f"Relatório semanal de plantões:{startWeekDate.strftime("%d/%m/%Y")}-{endWeekDate.strftime("%d/%m/%Y")}"
 
-    message.set_content(
-        """
-        Segue em anexo o relatório semanal.
 
-        Este e-mail foi gerado automaticamente.
-        """
-    )
+    message.set_content(f"Segue em anexo o relatório semanal de plantões.")
+
+    template_dir = Path(__file__).parent / "template"
+    html = (template_dir / "email_template.html").read_text(encoding="utf-8")
+    message.add_alternative(html, subtype="html")
+
+    html_part = message.get_payload()[1]
+    for filename, cid in [("Linha (1).jpg", "topo"), ("Linha (5).jpg", "rodape")]:
+        with open(template_dir / "assets" / filename, "rb") as f:
+            html_part.add_related(
+                f.read(),
+                maintype="image",
+                subtype="jpeg",
+                cid=f"<{cid}>",  
+            )
+
+
 
     with open(pdf_path, "rb") as file:
         pdf_data = file.read()
