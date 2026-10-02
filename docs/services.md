@@ -222,27 +222,27 @@ O NestJS retorna erros no formato padrão:
 ## 9. Estrutura de pastas
 
 ```
-/services
-  /src
-    /auth            # Autenticação e recuperação de senha
-      /dto           # DTOs de requisição
-      auth.controller.ts
-      auth.module.ts
-      auth.ts        # Serviço JWT
-      change-password.ts
-    /user            # Módulo de usuários
-      /dto
-      user.controller.ts
-      user.module.ts
-    /duty            # Módulo de plantões
-      duty.controller.ts
-      duty.module.ts
-    /config          # Configurações (ex.: nodemailer)
-    /repository      # Camada de acesso ao banco
-    /template        # Templates HTML de e-mail
-    main.ts          # Entry-point
-    app.module.ts
-  .env.example       # Modelo de variáveis de ambiente
-  package.json
-  prisma.config.ts
+services/
+├── src/
+│   ├── auth/                    # Autenticação e recuperação de senha
+│   │   ├── dto/                 # DTOs de requisição
+│   │   ├── auth.controller.ts   # Rotas de autenticação
+│   │   ├── auth.module.ts       # Módulo de autenticação e configuração do JWT
+│   │   ├── auth.ts              # Serviço JWT
+│   │   └── change-password.ts   # Geração e verificação do código de recuperação
+│   ├── user/                    # Módulo de usuários
+│   │   ├── dto/                 # DTOs de usuário
+│   │   ├── user.controller.ts   # Rotas de usuários
+│   │   └── user.module.ts
+│   ├── duty/                    # Módulo de plantões
+│   │   ├── duty.controller.ts   # Rotas de plantões
+│   │   └── duty.module.ts
+│   ├── config/                  # Configurações (ex.: nodemailer)
+│   ├── repository/              # Camada de acesso ao banco
+│   ├── template/                # Templates HTML de e-mail
+│   ├── app.module.ts            # Módulo raiz da aplicação
+│   └── main.ts                  # Entry-point, inicia o servidor
+├── .env.example                 # Modelo de variáveis de ambiente
+├── package.json
+└── prisma.config.ts             # Configuração do Prisma
 ```
