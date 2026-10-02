@@ -9,7 +9,9 @@ import path from 'path';
 @Injectable()
 export class ChangePassword implements OnModuleDestroy {
   constructor(private userService: User) {}
-  private readonly redis = new Redis();
+  private readonly redis = new Redis(
+    process.env.REDIS_URL ?? 'redis://localhost:6379',
+  );
 
   async createVerificationCode(userId: string): Promise<void> {
     const code = randomInt(0, 1_000_000).toString().padStart(6, '0');
