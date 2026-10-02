@@ -1,10 +1,14 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { SignInDto } from './dto/auth.dto';
+import { SignInDto, CreateCodeDto, VerifyCodeDto } from './dto/auth.dto';
 import { Auth } from './auth';
+import { ChangePassword } from './change-password';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: Auth) {}
+  constructor(
+    private authService: Auth,
+    private changePasswordService: ChangePassword,
+  ) {}
 
   @Post('sign-in')
   signIn(@Body() signInPayload: SignInDto) {
@@ -12,5 +16,18 @@ export class AuthController {
       signInPayload.email,
       signInPayload.password,
     );
+  }
+
+  @Post('change-password/generate')
+  async createCode(@Body() { userId }: CreateCodeDto) {
+    const code =
+      await this.changePasswordService.createVerificationCode(userId);
+    return { message: 'Código gerado', code };
+  }
+
+  @Post('change-password/verify')
+  async verifyCode(@Body() { userId, token }: VerifyCodeDto) {
+    const valid = await this.changePasswordService.verifyCode(userId, token);
+    return { valid };
   }
 }
