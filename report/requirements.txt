@@ -1,0 +1,6 @@
+SQLAlchemy
+psycopg[binary]
+python-dotenv
+Jinja2
+WeasyPrint
+APScheduler
