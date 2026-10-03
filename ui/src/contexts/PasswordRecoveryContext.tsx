@@ -1,18 +1,25 @@
-import { createContext, useContext, useState, type ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  type ReactNode,
+} from 'react';
 
-export type PasswordRecoveryStep = "idle" | "email" | "code" | "password";
+export type PasswordRecoveryStep =
+  | 'idle'
+  | 'email'
+  | 'code'
+  | 'password';
 
 type PasswordRecoveryContextValue = {
   step: PasswordRecoveryStep;
+  email: string;
+  code: string;
   startRecovery: () => void;
-  goToCode: () => void;
+  goToCode: (email: string) => void;
   returnToEmail: () => void;
-  goToNewPassword: () => void;
+  goToNewPassword: (code: string) => void;
   finishRecovery: () => void;
-};
-
-type PasswordRecoveryProviderProps = {
-  children: ReactNode;
 };
 
 const PasswordRecoveryContext =
@@ -20,33 +27,49 @@ const PasswordRecoveryContext =
 
 export function PasswordRecoveryProvider({
   children,
-}: PasswordRecoveryProviderProps) {
-  const [step, setStep] = useState<PasswordRecoveryStep>("idle");
+}: {
+  children: ReactNode;
+}) {
+  const [step, setStep] =
+    useState<PasswordRecoveryStep>('idle');
+
+  const [email, setEmail] = useState('');
+  const [code, setCode] = useState('');
 
   function startRecovery() {
-    setStep("email");
+    setEmail('');
+    setCode('');
+    setStep('email');
   }
 
-  function goToCode() {
-    setStep("code");
+  function goToCode(recoveryEmail: string) {
+    setEmail(recoveryEmail);
+    setCode('');
+    setStep('code');
   }
 
   function returnToEmail() {
-    setStep("email");
+    setCode('');
+    setStep('email');
   }
 
-  function goToNewPassword() {
-    setStep("password");
+  function goToNewPassword(verifiedCode: string) {
+    setCode(verifiedCode);
+    setStep('password');
   }
 
   function finishRecovery() {
-    setStep("idle");
+    setEmail('');
+    setCode('');
+    setStep('idle');
   }
 
   return (
     <PasswordRecoveryContext.Provider
       value={{
         step,
+        email,
+        code,
         startRecovery,
         goToCode,
         returnToEmail,
@@ -64,7 +87,7 @@ export function usePasswordRecovery() {
 
   if (!context) {
     throw new Error(
-      "usePasswordRecovery deve ser usado dentro de PasswordRecoveryProvider",
+      'usePasswordRecovery deve ser usado dentro de PasswordRecoveryProvider',
     );
   }
 
