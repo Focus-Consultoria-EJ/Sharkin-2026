@@ -1,10 +1,15 @@
-import { BadRequestException, Injectable, OnModuleDestroy } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  OnModuleDestroy,
+} from '@nestjs/common';
 import { randomInt } from 'crypto';
 import { transporter } from '@config/nodemailer';
 import Redis from 'ioredis';
 import { User } from '../user/user';
 import { readFileSync } from 'fs';
 import path from 'path';
+import { Logger } from '@nestjs/common';
 
 @Injectable()
 export class ChangePassword implements OnModuleDestroy {
@@ -13,6 +18,8 @@ export class ChangePassword implements OnModuleDestroy {
     process.env.REDIS_URL ?? 'redis://localhost:6379',
   );
 
+  private readonly logger = new Logger(ChangePassword.name);
+
   async createVerificationCode(userId: string): Promise<void> {
     const code = randomInt(0, 1_000_000).toString().padStart(6, '0');
     await this.redis.set(`pwd-reset:code:${userId}`, code, 'EX', 300);
@@ -20,10 +27,20 @@ export class ChangePassword implements OnModuleDestroy {
     const { name } = await this.userService.findUser(userId);
 
     const { email } = await this.userService.findUser(userId);
+
+    void this.sendCodeEmail({ name, email }, code).catch((err) =>
+      this.logger.error('Falha ao enviar e-mail de recuperação', err),
+    );
+  }
+
+  private async sendCodeEmail(
+    user: { name: string; email: string },
+    code: string,
+  ) {
     let html = readFileSync(
       path.resolve(__dirname, '../template/emailRecuperar.html'),
       'utf-8',
-    ).replace('{{ NOME }}', name);
+    ).replace('{{ NOME }}', user.name);
 
     for (let i = 1; i <= 6; i++) {
       html = html.replace(`{{ DIGITO_${i} }}`, code[i - 1]);
@@ -34,8 +51,8 @@ export class ChangePassword implements OnModuleDestroy {
 
     await transporter.sendMail({
       from: process.env.EMAIL_ADDRESS,
-      to: email,
-      subject: 'Seu código de verificação', //Precisamos de um html para estilizar essa mensagem
+      to: user.email,
+      subject: 'Seu código de verificação',
       text: `Seu código é: ${code}`,
       html: html,
       attachments: [
@@ -53,10 +70,14 @@ export class ChangePassword implements OnModuleDestroy {
     });
   }
 
-  async verifyCode(userId: string, code: string, consume = false): Promise<boolean> {
+  async verifyCode(
+    userId: string,
+    code: string,
+    consume = false,
+  ): Promise<boolean> {
     const key = `pwd-reset:code:${userId}`;
 
-    if(!consume){
+    if (!consume) {
       const stored = await this.redis.get(key);
       return stored !== null && stored === code;
     }
@@ -72,13 +93,17 @@ export class ChangePassword implements OnModuleDestroy {
       `,
       1,
       key,
-      code
+      code,
     );
 
     return Number(result) === 1;
   }
 
-  async resetPassword( userId: string, code: string, newPassword: string): Promise<void> {
+  async resetPassword(
+    userId: string,
+    code: string,
+    newPassword: string,
+  ): Promise<void> {
     const user = await this.userService.findUser(userId);
 
     const valid = await this.verifyCode(userId, code, true);
@@ -91,12 +116,11 @@ export class ChangePassword implements OnModuleDestroy {
 
     const newHash = await Bun.password.hash(newPassword);
 
-    const updated =
-      await this.userService.updatePasswordIfUnchanged(
-        userId,
-        user.password,
-        newHash,
-      );
+    const updated = await this.userService.updatePasswordIfUnchanged(
+      userId,
+      user.password,
+      newHash,
+    );
 
     if (!updated) {
       throw new BadRequestException(

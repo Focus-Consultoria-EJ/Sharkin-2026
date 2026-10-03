@@ -1,18 +1,19 @@
-import { flushSync } from 'react-dom';
-import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router';
+import { flushSync } from "react-dom";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router";
 
-import { AuthButton } from '@/components/auth/AuthButton';
-import { AuthField } from '@/components/auth/AuthField';
-import { AuthLayout } from '@/components/auth/AuthLayout';
-import { usePasswordRecovery } from '@/contexts/PasswordRecoveryContext';
+import { AuthButton } from "@/components/auth/AuthButton";
+import { AuthField } from "@/components/auth/AuthField";
+import { AuthLayout } from "@/components/auth/AuthLayout";
+import { usePasswordRecovery } from "@/contexts/PasswordRecoveryContext";
+import { isAxiosError } from "axios";
 
 import {
   requestRecoveryCode,
   recoveryErrorMessage,
-} from '@/api/passwordRecovery';
+} from "@/api/passwordRecovery";
 
-import mailIcon from '@/assets/symbols/mail.png';
+import mailIcon from "@/assets/symbols/mail.png";
 
 type RecoveryFormData = {
   email: string;
@@ -29,14 +30,14 @@ export function RecoverPasswordPage() {
     clearErrors,
     formState: { errors, isSubmitting },
   } = useForm<RecoveryFormData>({
-    mode: 'onBlur',
+    mode: "onBlur",
     defaultValues: {
       email,
     },
   });
 
   async function onSubmit(data: RecoveryFormData) {
-    clearErrors('root');
+    clearErrors("root");
 
     const normalizedEmail = data.email.trim().toLowerCase();
 
@@ -44,10 +45,12 @@ export function RecoverPasswordPage() {
       await requestRecoveryCode(normalizedEmail);
 
       flushSync(() => goToCode(normalizedEmail));
-      navigate('/verificar-codigo');
+      navigate("/verificar-codigo");
     } catch (error) {
-      setError('root', {
-        type: 'server',
+      console.error(error);
+      if (isAxiosError(error)) console.log(error.code, error.message);
+      setError("root", {
+        type: "server",
         message: recoveryErrorMessage(error),
       });
     }
@@ -70,11 +73,11 @@ export function RecoverPasswordPage() {
           icon={mailIcon}
           placeholder="e-mail para recuperação"
           autoComplete="email"
-          registration={register('email', {
-            required: 'Informe o e-mail.',
+          registration={register("email", {
+            required: "Informe o e-mail.",
             pattern: {
               value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-              message: 'Informe um e-mail válido.',
+              message: "Informe um e-mail válido.",
             },
           })}
           error={errors.email?.message}
@@ -87,7 +90,7 @@ export function RecoverPasswordPage() {
         )}
 
         <AuthButton disabled={isSubmitting}>
-          {isSubmitting ? 'Enviando...' : 'Enviar'}
+          {isSubmitting ? "Enviando..." : "Enviar"}
         </AuthButton>
       </form>
     </AuthLayout>
