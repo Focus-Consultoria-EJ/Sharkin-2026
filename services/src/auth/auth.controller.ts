@@ -1,5 +1,5 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { SignInDto, CreateCodeDto, VerifyCodeDto } from './dto/auth.dto';
+import { SignInDto, CreateCodeDto, VerifyCodeDto, ResetPasswordDto } from './dto/auth.dto';
 import { Auth } from './auth';
 import { ChangePassword } from './change-password';
 
@@ -29,5 +29,18 @@ export class AuthController {
   async verifyCode(@Body() { userId, token }: VerifyCodeDto) {
     const valid = await this.changePasswordService.verifyCode(userId, token);
     return { valid };
+  }
+
+  @Post('change-password/reset')
+  async resetPassword(
+    @Body() { userId, token, password }: ResetPasswordDto,
+  ) {
+    await this.changePasswordService.resetPassword(
+      userId,
+      token,
+      password,
+    );
+
+    return { message: 'Senha redefinida com sucesso.' };
   }
 }

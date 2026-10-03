@@ -1,4 +1,4 @@
-import { Injectable, OnModuleDestroy } from '@nestjs/common';
+import { BadRequestException, Injectable, OnModuleDestroy } from '@nestjs/common';
 import { randomInt } from 'crypto';
 import { transporter } from '@config/nodemailer';
 import Redis from 'ioredis';
@@ -53,12 +53,56 @@ export class ChangePassword implements OnModuleDestroy {
     });
   }
 
-  async verifyCode(userId: string, code: string): Promise<boolean> {
-    const stored = await this.redis.get(`pwd-reset:code:${userId}`);
-    if (stored !== code) return false;
+  async verifyCode(userId: string, code: string, consume = false): Promise<boolean> {
+    const key = `pwd-reset:code:${userId}`;
 
-    await this.redis.del(`pwd-reset:code:${userId}`);
-    return true;
+    if(!consume){
+      const stored = await this.redis.get(key);
+      return stored !== null && stored === code;
+    }
+
+    const result = await this.redis.eval(
+      `
+      local stored = redis.call("GET", KEYS[1])
+      if not stored or stored ~= ARGV[1] then
+        return 0
+      end
+      redis.call("DEL", KEYS[1])
+      return 1
+      `,
+      1,
+      key,
+      code
+    );
+
+    return Number(result) === 1;
+  }
+
+  async resetPassword( userId: string, code: string, newPassword: string): Promise<void> {
+    const user = await this.userService.findUser(userId);
+
+    const valid = await this.verifyCode(userId, code, true);
+
+    if (!valid) {
+      throw new BadRequestException(
+        'Código inválido ou expirado. Solicite outro código.',
+      );
+    }
+
+    const newHash = await Bun.password.hash(newPassword);
+
+    const updated =
+      await this.userService.updatePasswordIfUnchanged(
+        userId,
+        user.password,
+        newHash,
+      );
+
+    if (!updated) {
+      throw new BadRequestException(
+        'Não foi possível redefinir a senha. Reinicie a recuperação.',
+      );
+    }
   }
 
   async onModuleDestroy() {
