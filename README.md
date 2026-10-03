@@ -77,7 +77,25 @@ Sharkin/
 
 ## 5. Como rodar o projeto completo
 
-Para testar o relatório sem esperar a sexta-feira, chame a função `main()` do `app.py` diretamente.
+Todos os serviços sobem na mesma rede criada pelo Docker Compose. Dentro dela, cada container é acessado pelo nome do serviço definido no docker-compose.yml. Na mesma pasta que contém o arquivo compose.yaml (raiz do projeto) rode
+
+```
+docker compose up --build
+```
+
+Depois disso:
+
+UI: http://localhost:3000
+API: http://localhost:3001
+O report fica em execução e envia o relatório toda sexta-feira às 18:20.
+
+Para descer os containers:
+
+```
+docker compose down
+```
+
+Se estiver em um ambiente linux sem ter configurado o usuário, rode esses comando como `sudo`
 
 ## 6. Portas e variáveis de ambiente
 
