@@ -19,7 +19,9 @@ export function UserPage() {
     const token = localStorage.getItem("token");
     const { sub, username } = jwtDecode<JwtPayload>(token!);
 
-    setName(username);
+    const firstName = username.split(" ")[0];
+
+    setName(firstName!);
 
     try {
       const { data } = await sharkinApi.get(`/duty/${sub}`);
