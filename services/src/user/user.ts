@@ -71,4 +71,12 @@ export class User {
 
     return user;
   }
+
+  async updatePasswordIfUnchanged( userId: string, previousHash: string, newHash: string): Promise<boolean> {
+    return this.repository.updatePasswordIfUnchanged(
+      userId,
+      previousHash,
+      newHash,
+    );
+  }
 }

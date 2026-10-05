@@ -6,6 +6,12 @@ import { AuthButton } from "@/components/auth/AuthButton";
 import { AuthField } from "@/components/auth/AuthField";
 import { AuthLayout } from "@/components/auth/AuthLayout";
 import { usePasswordRecovery } from "@/contexts/PasswordRecoveryContext";
+import { isAxiosError } from "axios";
+
+import {
+  requestRecoveryCode,
+  recoveryErrorMessage,
+} from "@/api/passwordRecovery";
 
 import mailIcon from "@/assets/symbols/mail.png";
 
@@ -15,24 +21,45 @@ type RecoveryFormData = {
 
 export function RecoverPasswordPage() {
   const navigate = useNavigate();
-  const { goToCode } = usePasswordRecovery();
+  const { email, goToCode } = usePasswordRecovery();
+
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    setError,
+    clearErrors,
+    formState: { errors, isSubmitting },
   } = useForm<RecoveryFormData>({
     mode: "onBlur",
+    defaultValues: {
+      email,
+    },
   });
 
-  function onSubmit() {
-    flushSync(() => goToCode());
-    navigate("/verificar-codigo");
+  async function onSubmit(data: RecoveryFormData) {
+    clearErrors("root");
+
+    const normalizedEmail = data.email.trim().toLowerCase();
+
+    try {
+      await requestRecoveryCode(normalizedEmail);
+
+      flushSync(() => goToCode(normalizedEmail));
+      navigate("/verificar-codigo");
+    } catch (error) {
+      console.error(error);
+      if (isAxiosError(error)) console.log(error.code, error.message);
+      setError("root", {
+        type: "server",
+        message: recoveryErrorMessage(error),
+      });
+    }
   }
 
   return (
     <AuthLayout
       title="Recuperar senha"
-      subtitle="Informe seu e-mail e enviaremos um código para recuperação da sua senha."
+      subtitle="Informe seu e-mail. Se ele estiver cadastrado, enviaremos um código para recuperação."
       accent="forward"
     >
       <form
@@ -56,7 +83,15 @@ export function RecoverPasswordPage() {
           error={errors.email?.message}
         />
 
-        <AuthButton>Enviar</AuthButton>
+        {errors.root?.message && (
+          <p className="auth-field__error" role="alert">
+            {errors.root.message}
+          </p>
+        )}
+
+        <AuthButton disabled={isSubmitting}>
+          {isSubmitting ? "Enviando..." : "Enviar"}
+        </AuthButton>
       </form>
     </AuthLayout>
   );

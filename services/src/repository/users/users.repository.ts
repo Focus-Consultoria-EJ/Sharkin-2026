@@ -60,4 +60,19 @@ export class UsersRepository {
 
     return user;
   }
+
+  async updatePasswordIfUnchanged( userId: string, previousHash: string, newHash: string): Promise<boolean> {
+    const result = await prisma.user.updateMany({
+      where: {
+        user_id: userId,
+        is_active: true,
+        password: previousHash,
+      },
+      data: {
+        password: newHash,
+      },
+    });
+
+    return result.count === 1;
+  }
 }
